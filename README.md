@@ -1,7 +1,7 @@
-#Swordfish 2020
-######Swordfish formal applicant test.
+# Swordfish 2020
+##### Swordfish formal applicant test.
 
-##Preface
+## Preface
 Greetings; thank you for your time to asses this assignment.
 
 Best regards,
@@ -20,20 +20,20 @@ Allie.
         - Github Username
     
 
-###Objectives
+### Objectives
 - Integrate with Github API v3 via OAuth.
 - Create class definitions to represent the Github entities.
     - Write class interface.
     - Implement class methods.
 - Build web interface.
 
-###Focus
+### Focus
 - Simplicity and readability of code.
 - Exception mitigation.
 - Ease of use.
 - Verbosity of code comments.
  
-####Predicates
+#### Predicates
 - Public domain to be used: allie.co.za
 - No state/database necessary.
 - PHP 7.3+
@@ -43,12 +43,12 @@ Allie.
 - No writing of extensive repository commit messages.
 - Unit/Functional testing excepted. 
 
-####Exception Handling
+#### Exception Handling
 - Indicated as imperative this assignment.
     - Semantic user messages upon fatal errors. (Nice to have)
     - Limit to sufficient catch clauses, as not to overcrowd the app.
 
-####Ui/Ux
+#### Ui/Ux
 - Allocating a maximum percentage of time to 25% for styling.
 - No frontend layout framework except, an html boilerplate stylesheet and jQuery.
 - Mobile/responsiveness not imperative, but a mobile first approach to be held to.
