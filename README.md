@@ -11,7 +11,14 @@ Allie.
 - Challenge: small web application that uses the Github API and OAuth to view a list of issues and create new issues.
 - Two tasks are specified: 
     - Task 1: List issues
+        - Retrieve all issues (open and closed) from the repository and display 
     - Task 2: Write issues
+        - The user should be able to provide the following information when submitting a new issue:
+        - Issue Title
+        - Issue Description (Body)
+        - Select which client this issue is related to (C: Client ABC, C: Client XYZ, C: Client MNO)
+        - Select a priority for the issue (P: Low, P: Medium, P: High)
+        - Select the type of the issue (T: Bug, T: Support, T: Enhancement)
 - **Important Information**.
     - OAuth to authenticate your web application.
     - Email iwant2work@swordfish.co.za providing us with the
@@ -52,3 +59,18 @@ Allie.
 - Allocating a maximum percentage of time to 25% for styling.
 - No frontend layout framework except, an html boilerplate stylesheet and jQuery.
 - Mobile/responsiveness not imperative, but a mobile first approach to be held to.
+
+#### Given / Provided
+Three Prefixes P, C, T
+- P: Priority - (P: Low, P: Medium, P: High)
+- C: Client -  (C: Client ABC, C: Client XYZ, C: Client MNO)
+- T: Types - (T: Bug, T: Support, T: Enhancement)
+ 
+
+### Concepts
+Nine labels, prefixed with P, C or T.
+
+### Contraindications with regards to C-type lables.
+- Nine lables mean that there are nine entities categorised with three prefixes.
+- This could mean that C-prefixed labels are many-to-*
+- How could there only be nine lables, when one of their prefixes is to identify a client?
