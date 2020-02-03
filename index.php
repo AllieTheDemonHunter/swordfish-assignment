@@ -4,7 +4,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 $provider = new League\OAuth2\Client\Provider\Github([
     'clientId' => '2434d612549dff0bb4e0',
     'clientSecret' => file_get_contents('.no-secret-for-you'),
-    'redirectUri' => '/swordhunter/auth',
+    'redirectUri' => 'swordhunter/auth',
 ]);
 
 if (!isset($_GET['code'])) {
