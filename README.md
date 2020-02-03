@@ -40,7 +40,7 @@ Allie.
 - Ease of use.
 - Verbosity of code comments.
  
-#### Predicates
+## Predicates
 - Public domain to be used: allie.co.za
 - No state/database necessary.
 - PHP 7.3+
@@ -60,14 +60,13 @@ Allie.
 - No frontend layout framework except, an html boilerplate stylesheet and jQuery.
 - Mobile/responsiveness not imperative, but a mobile first approach to be held to.
 
-#### Given / Provided
+## Given / Provided
 Three Prefixes P, C, T
 - P: Priority - (P: Low, P: Medium, P: High)
 - C: Client -  (C: Client ABC, C: Client XYZ, C: Client MNO)
 - T: Types - (T: Bug, T: Support, T: Enhancement)
  
-
-### Concepts
+## Concepts
 Nine labels, prefixed with P, C or T.
 
 ### Contraindications with regards to C-type lables.

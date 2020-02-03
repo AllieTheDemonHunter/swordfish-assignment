@@ -2,6 +2,6 @@
     "require": {
         "knplabs/github-api": "^2.12",
         "php-http/guzzle6-adapter": "^1.1",
-        "cache/redis-adapter": "*"
+        "league/oauth2-github": "^2.0"
     }
 }
