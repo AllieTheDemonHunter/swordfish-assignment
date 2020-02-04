@@ -19,7 +19,7 @@ if (get('action') == 'login') {
     unset($_SESSION['access_token']);
     $params = array(
         'client_id' => OAUTH2_CLIENT_ID,
-        'redirect_uri' => $_SERVER["REQUEST_SCHEME"] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'],
+        'redirect_uri' => 'https://allie.co.za/swordhunter/',
         'scope' => 'user',
         'state' => $_SESSION['state']
     );
