@@ -32,14 +32,14 @@ if (get('action') == 'login') {
 if (get('code')) {
     // Verify the state matches our stored state
     if (!get('state') || $_SESSION['state'] != get('state')) {
-        header('Location: ' . $_SERVER['PHP_SELF']);
+        header('Location: ' . 'https://allie.co.za/swordhunter/');
         die();
     }
     // Exchange the auth code for a token
     $token = apiRequest($tokenURL, array(
         'client_id' => OAUTH2_CLIENT_ID,
         'client_secret' => OAUTH2_CLIENT_SECRET,
-        'redirect_uri' => $_SERVER['SERVER_PROTOCOL'] . '://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'],
+        'redirect_uri' => 'https://allie.co.za/swordhunter/',
         'state' => $_SESSION['state'],
         'User-Agent' => APP_NAME,
         'code' => get('code')
