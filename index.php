@@ -49,7 +49,7 @@ if (get('code')) {
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/repos_url');
+    $response = apiRequest($apiURLBase . '/issues');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
