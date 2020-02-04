@@ -31,7 +31,7 @@ class gitHub
              * POST /repos/:owner/:repo/issues
              *
              */
-            $response = $this->apiRequest(API_URL . '/issues');
+            $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues');
             echo '<h3>Logged In</h3>';
             echo '<pre>';
             print_r($response);
@@ -83,7 +83,7 @@ trait gitHubTrait
 {
     function get($key, $default = NULL)
     {
-        if(isset($_GET)) {
+        if (isset($_GET)) {
             return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
         }
         return false;
@@ -91,7 +91,7 @@ trait gitHubTrait
 
     function session($key, $default = NULL)
     {
-        if(isset($_SESSION)) {
+        if (isset($_SESSION)) {
             return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
         }
 
