@@ -1,6 +1,6 @@
 <?php
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', file_get_contents(getcwd() . '/../../.no-secret-for-you'));
+define('OAUTH2_CLIENT_SECRET', file_get_contents(getcwd() . '/../.no-secret-for-you'));
 define('APP_NAME', 'swordfish-assignment');
 define('APP_NAME_LOCAL', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
@@ -83,12 +83,19 @@ trait gitHubTrait
 {
     function get($key, $default = NULL)
     {
-        return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
+        if(isset($_GET)) {
+            return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
+        }
+        return false;
     }
 
     function session($key, $default = NULL)
     {
-        return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
+        if(isset($_SESSION)) {
+            return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
+        }
+
+        return false;
     }
 }
 
