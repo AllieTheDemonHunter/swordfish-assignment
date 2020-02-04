@@ -49,7 +49,7 @@ if (get('code')) {
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/list-issues');
+    $response = apiRequest($apiURLBase . '/issues');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
@@ -66,6 +66,7 @@ function apiRequest($url, $post = FALSE, $headers = array())
     if ($post)
         curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
     $headers[] = 'Accept: application/json';
+    $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
     if (session('access_token'))
         $headers[] = 'Authorization: Bearer ' . session('access_token');
     $headers[] = 'User-Agent:' . APP_NAME;
