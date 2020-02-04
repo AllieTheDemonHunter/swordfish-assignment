@@ -1,14 +1,12 @@
 <?php
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', file_get_contents(getcwd().'/../../.no-secret-for-you'));
-// see https://developer.github.com/v3/#user-agent-required
-define('APP_NAME', 'swordfish-assignment');
+define('APP_NAME', 'swordfish-assignment'); //Need this.
 
+// These won't change, but keeping them as variables for now.
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
 $apiURLBase = 'https://api.github.com';
-// or, in the case of https://education.github.com/pack, uncomment this:
-//$apiURLBase = 'https://education.github.com/api';
 
 session_start();
 
@@ -49,7 +47,7 @@ if (get('code')) {
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/repos/AllieTheDemonHunter/swordfish-assignment/issues');
+    $response = apiRequest($apiURLBase . '/repos/AllieTheDemonHunter/'.APP_NAME.'/issues');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
