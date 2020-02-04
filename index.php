@@ -2,7 +2,7 @@
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', file_get_contents('.no-secret-for-you'));
 // see https://developer.github.com/v3/#user-agent-required
-define('APP_NAME', 'AllieTheDemonHunter');
+define('APP_NAME', 'swordfish-assignment');
 
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
@@ -49,7 +49,7 @@ if (get('code')) {
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/swordfish-assignment/issues/');
+    $response = apiRequest($apiURLBase . '/issues');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
