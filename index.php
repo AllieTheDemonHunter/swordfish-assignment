@@ -2,7 +2,7 @@
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', file_get_contents('.no-secret-for-you'));
 // see https://developer.github.com/v3/#user-agent-required
-define('APP_NAME', 'swordhunter');
+define('APP_NAME', 'AllieTheDemonHunter');
 
 $authorizeURL = 'https://github.com/login/oauth/authorize';
 $tokenURL = 'https://github.com/login/oauth/access_token';
