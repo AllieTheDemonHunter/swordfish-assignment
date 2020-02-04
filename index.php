@@ -49,7 +49,7 @@ if (get('code')) {
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/issues');
+    $response = apiRequest($apiURLBase . '/repos/AllieTheDemonHunter/swordfish-assignment/issues');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
