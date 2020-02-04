@@ -45,11 +45,11 @@ if (get('code')) {
         'code' => get('code')
     ));
     $_SESSION['access_token'] = $token->access_token;
-    header('Location: ' . $_SERVER['PHP_SELF']);
+    header('Location: ' . 'https://allie.co.za/swordhunter/');
 }
 
 if (session('access_token')) {
-    $response = apiRequest($apiURLBase . '/user');
+    $response = apiRequest($apiURLBase . '/repos_url');
     echo '<h3>Logged In</h3>';
     echo '<pre>';
     print_r($response);
@@ -83,5 +83,3 @@ function session($key, $default = NULL)
 {
     return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
 }
-
-print_r($_SESSION);
