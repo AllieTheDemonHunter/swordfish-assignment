@@ -37,8 +37,9 @@ class gitHub
             echo '<pre>';
             print_r($response);
             echo '</pre>';
+            exit(/* die() is a synonym, this is my preference.  */);
         }
-        elseif ($this->get('action') === 'login') {
+       if ($this->get('action') === 'login') {
             // Start the login process by sending the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
