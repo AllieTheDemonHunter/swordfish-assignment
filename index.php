@@ -53,10 +53,6 @@ class gitHub
                 die();
 
         }
-        else {
-            echo '<h3>Not logged in</h3>';
-            echo '<p><a href="?action=login">Log In</a></p>';
-        }
         // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
         if ($this->get('code')) {
             // Verify the state matches our stored state
@@ -76,6 +72,10 @@ class gitHub
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
             exit(); // I don't like die().
+        }
+        else {
+            echo '<h3>Not logged in</h3>';
+            echo '<p><a href="?action=login">Log In</a></p>';
         }
     }
 
