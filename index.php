@@ -37,12 +37,9 @@ class gitHub
             echo '<pre>';
             print_r($response);
             echo '</pre>';
+            exit(/* die() is a synonym, this is my preference.  */);
         }
-        else {
-            echo '<h3>Not logged in</h3>';
-            echo '<p><a href="?action=login">Log In</a></p>';
-        }
-       if ($this->get('action') === 'login') {
+        if ($this->get('action') === 'login') {
             // Start the login process by sending the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
@@ -58,6 +55,7 @@ class gitHub
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
             exit(/* die() is a synonym, this is my preference.  */);
         }
+
         if ($this->get('action') === 'code') {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
@@ -78,6 +76,11 @@ class gitHub
             header('Location: ' . $this->base_url);
             exit(); // I don't like die().
         }
+
+        //All clauses have exit().
+        echo '<h3>Not logged in</h3>';
+        echo '<p><a href="?action=login">Log In</a></p>';
+
     }
 
     function apiRequest($url, $post = FALSE, $headers = array())
