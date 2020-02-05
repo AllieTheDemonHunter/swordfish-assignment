@@ -37,7 +37,7 @@ class gitHub
             echo '<pre>';
             print_r($response);
             echo '</pre>';
-            exit(/* die() is a synonym, this is my preference.  */);
+            exit('Left at:'.__LINE__); // I don't like die().
         }
         if ($this->get('action') === 'login') {
             // Start the login process by sending the user to Github's authorization page
@@ -53,7 +53,7 @@ class gitHub
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
-            exit(/* die() is a synonym, this is my preference.  */);
+            exit('Left at:'.__LINE__); // I don't like die().
         }
 
         if ($this->get('action') === 'code') {
@@ -61,7 +61,7 @@ class gitHub
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                exit(); // I don't like die().
+                exit('Left at:'.__LINE__); // I don't like die().
             }
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
@@ -74,7 +74,7 @@ class gitHub
             ));
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
-            exit(); // I don't like die().
+            exit('Left at:'.__LINE__); // I don't like die().
         }
 
         //All clauses have exit().
