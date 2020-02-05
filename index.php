@@ -10,6 +10,12 @@ define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
+/**
+ * The problem is with the functions found in the trait, the get() and session() methods should function as
+ * checks for the presence of URI _keys_. Not request their values - that will be done once these functions have
+ * confirmed that there is a key available.
+ */
+
 session_start();
 
 class gitHub
@@ -39,24 +45,8 @@ class gitHub
             echo '</pre>';
             exit('Left at:'.__LINE__); // I don't like die().
         }
-        if ($this->get('action') === 'login') {
-            // Start the login process by sending the user to Github's authorization page
 
-            // Generate a random hash and store in the session for security
-            $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
-            unset($_SESSION['access_token']);
-            $params = array(
-                'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'scope' => 'user',
-                'state' => $_SESSION['state']
-            );
-            // Redirect the user to Github's authorization page
-            header('Location: ' . AUTH_URL . '?' . http_build_query($params));
-            exit('Left at:'.__LINE__); // I don't like die().
-        }
-
-        if ($this->get('action') === 'code') {
+        if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
@@ -77,9 +67,28 @@ class gitHub
             exit('Left at:'.__LINE__); // I don't like die().
         }
 
+
+        if ($this->get('login')) {
+            // Start the login process by sending the user to Github's authorization page
+
+            // Generate a random hash and store in the session for security
+            $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+            unset($_SESSION['access_token']);
+            $params = array(
+                'client_id' => OAUTH2_CLIENT_ID,
+                'redirect_uri' => 'https://allie.co.za/swordhunter/',
+                'scope' => 'user',
+                'state' => $_SESSION['state']
+            );
+            // Redirect the user to Github's authorization page
+            header('Location: ' . AUTH_URL . '?' . http_build_query($params));
+            exit('Left at:'.__LINE__); // I don't like die().
+        }
+
+
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
-        echo '<p><a href="?action=login">Log In</a></p>';
+        echo '<p><a href="?login=1">Log In</a></p>';
 
     }
 
@@ -105,7 +114,8 @@ trait gitHubTrait
     function get($key, $default = NULL)
     {
         if (isset($_GET)) {
-            return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
+            $r = array_key_exists($key, $_GET) ? $_GET[$key] : $default;
+            return $r;
         }
         return false;
     }
@@ -113,7 +123,8 @@ trait gitHubTrait
     function session($key, $default = NULL)
     {
         if (isset($_SESSION)) {
-            return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
+            $r = array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
+            return $r;
         }
 
         return false;
