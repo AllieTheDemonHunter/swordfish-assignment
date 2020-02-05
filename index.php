@@ -1,5 +1,6 @@
 <?php
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
+define('OAUTH2_CLIENT_SECRET', file_get_contents($_SERVER['HOME'] . '/.no-secret-for-you'));
 define('APP_NAME', 'swordfish-assignment');
 define('APP_NAME_LOCAL', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
@@ -15,16 +16,9 @@ class gitHub
 {
     use gitHubTrait;
     public $base_url;
-    private $secret;
 
     function __construct()
     {
-        $secret_location = $_SERVER["DOCUMENT_ROOT"];
-        $secret_path = explode('/', $secret_location);
-        array_pop($secret_path);
-        $secret_path = implode('/', $secret_path);
-        $this->secret = file_get_contents($secret_path . '/.no-secret-for-you');
-
         //Making life easier.
         $this->base_url = 'Location: ' . PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         if ($this->session('access_token')) {
@@ -56,7 +50,7 @@ class gitHub
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'client_secret' => $this->secret,
+                'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
@@ -72,11 +66,8 @@ class gitHub
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        curl_setopt($ch, CURLOPT_USE_SSL, TRUE);
-        if ($post) {
+        if ($post)
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
-        }
-
         $headers[] = 'Accept: application/json';
         $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
         if ($this->session('access_token'))
@@ -90,7 +81,7 @@ class gitHub
 
 trait gitHubTrait
 {
-    function get($key, $default = NULL) 
+    function get($key, $default = NULL)
     {
         if (isset($_GET)) {
             return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
