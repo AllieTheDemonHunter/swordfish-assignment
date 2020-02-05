@@ -37,7 +37,10 @@ class gitHub
             echo '<pre>';
             print_r($response);
             echo '</pre>';
-            exit(/* die() is a synonym, this is my preference.  */);
+        }
+        else {
+            echo '<h3>Not logged in</h3>';
+            echo '<p><a href="?action=login">Log In</a></p>';
         }
        if ($this->get('action') === 'login') {
             // Start the login process by sending the user to Github's authorization page
@@ -74,9 +77,6 @@ class gitHub
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
             exit(); // I don't like die().
-        } else {
-            echo '<h3>Not logged in</h3>';
-            echo '<p><a href="?action=login">Log In</a></p>';
         }
     }
 
