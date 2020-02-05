@@ -36,14 +36,12 @@ class gitHub
              *
              * GET /repos/:owner/:repo/issues/:issue_number
              * POST /repos/:owner/:repo/issues
-             *
              */
+
             $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues');
             echo '<h3>Logged In</h3>';
-            echo '<pre>';
-            print_r($response);
-            echo '</pre>';
-            exit('Left at:'.__LINE__); // I don't like die().
+            print '<pre>' . json_encode($response) . '<pre>';
+            exit('Left at:' . __LINE__); // I don't like die().
         }
 
         if ($this->get('code')) {
@@ -51,7 +49,7 @@ class gitHub
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                exit('Left at:'.__LINE__); // I don't like die().
+                exit();
             }
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
@@ -64,16 +62,20 @@ class gitHub
             ));
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
-            exit('Left at:'.__LINE__); // I don't like die().
+            exit();
         }
 
 
         if ($this->get('login')) {
-            // Start the login process by sending the user to Github's authorization page
+            // Send the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
             $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+
+            // Freshen up
             unset($_SESSION['access_token']);
+
+            // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
@@ -82,9 +84,8 @@ class gitHub
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
-            exit('Left at:'.__LINE__); // I don't like die().
+            exit();
         }
-
 
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
