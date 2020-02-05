@@ -20,7 +20,8 @@ class gitHub
     function __construct()
     {
         //Making life easier.
-        $this->base_url = 'Location: ' . PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
+        $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
+
         if ($this->session('access_token')) {
             /**
              * Verbs
@@ -37,7 +38,7 @@ class gitHub
             print_r($response);
             echo '</pre>';
         }
-        elseif ($this->get('action') == 'login') {
+        elseif ($this->get('action') === 'login') {
             // Start the login process by sending the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
@@ -51,9 +52,9 @@ class gitHub
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
-            exit(); // I don't like die().
+            exit(/* die() is a synonym, this is my preference.  */);
         }
-        if ($this->get('code')) {
+        if ($this->get('action') === 'code') {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
