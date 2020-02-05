@@ -52,9 +52,8 @@ class gitHub
                 header('Location: ' . AUTH_URL . '?' . http_build_query($params));
                 die();
 
-        }
-        // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
-        if ($this->get('code')) {
+        } elseif ($this->get('code')) {
+            // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
