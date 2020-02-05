@@ -42,7 +42,24 @@ class gitHub
             echo '<pre>';
             print_r($response);
             echo '</pre>';
-        } else {
+        } elseif($this->get('action') == 'login') {
+            // Start the login process by sending the user to Github's authorization page
+
+                // Generate a random hash and store in the session for security
+                $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+                unset($_SESSION['access_token']);
+                $params = array(
+                    'client_id' => OAUTH2_CLIENT_ID,
+                    'redirect_uri' => 'https://allie.co.za/swordhunter/',
+                    'scope' => 'user',
+                    'state' => $_SESSION['state']
+                );
+                // Redirect the user to Github's authorization page
+                header('Location: ' . AUTH_URL . '?' . http_build_query($params));
+                die();
+
+        }
+        else {
             echo '<h3>Not logged in</h3>';
             echo '<p><a href="?action=login">Log In</a></p>';
         }
