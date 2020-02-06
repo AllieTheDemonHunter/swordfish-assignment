@@ -41,7 +41,7 @@ class gitHub
 
             $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
 
-                . '/issues'
+                . '/issues?state=closed'
             );
             echo '<h3>Logged In</h3>';
             print '<pre>' . json_encode($response) . '<pre>';
