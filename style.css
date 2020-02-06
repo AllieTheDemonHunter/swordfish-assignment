@@ -2,7 +2,7 @@ ul {
   list-style: none;
   padding: 0; }
 
-.id, .url, .label {
+.id, .url, .friendly-name {
   display: none; }
 
 li {
@@ -12,15 +12,41 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: 0.8vw; }
 
-.issues > .collection > li:first-child .issue > li > .label {
+.issues > .collection > li:first-child .issue > li > .friendly-name {
   display: block; }
 
-.labels .label {
-  display: block; }
+.labels {
+  flex-grow: 1 !important; }
+  .labels .label {
+    display: block;
+    padding: 0 1rem;
+    margin: 0; }
+  .labels > .collection {
+    outline: 1px dashed magenta;
+    display: flex;
+    flex-flow: row nowrap; }
+    .labels > .collection ul.label {
+      width: 100px;
+      color: red; }
+      .labels > .collection ul.label .friendly-name {
+        display: none; }
+  .labels > .friendly-name {
+    display: none !important; }
+
+.description > .label {
+  display: none; }
+
+.assignees, .id {
+  display: none; }
 
 .issue {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between; }
+  justify-content: flex-start; }
   .issue > li {
     flex: 0 1 10vw; }
+    .issue > li.number {
+      flex: 0 1 2em;
+      text-align: center; }
+    .issue > li.assignees, .issue > li.user, .issue > li.created_at, .issue > li.updated_at, .issue > li.closed_at {
+      display: none; }

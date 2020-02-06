@@ -7,7 +7,7 @@ ul {
   padding: 0;
 }
 
-.id, .url, .label {
+.id, .url, .friendly-name {
   display: none;
 }
 
@@ -27,7 +27,7 @@ body {
 .issues {
   > .collection {
     > li:first-child {
-      .issue > li > .label {
+      .issue > li > .friendly-name {
         display: block;
       }
     }
@@ -35,16 +35,54 @@ body {
 }
 
 .labels {
+  flex-grow: 1 !important;
   .label {
     display: block;
+    padding: 0 1rem;
+    margin: 0;
   }
+
+  > .collection {
+    outline: 1px dashed rgb(255, 0, 255);
+    display: flex;
+    flex-flow: row nowrap;
+    ul.label {
+      width: 100px;
+      color: red;
+      .friendly-name {
+        display: none;
+      }
+    }
+  }
+
+  > .friendly-name {
+    display: none !important;
+  }
+
+}
+.description > .label {
+  display: none;
+
+}
+.assignees, .id {
+  display: none;
 }
 
 .issue {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+
   > li {
     flex: 0 1 10vw;
+
+    &.number {
+      flex: 0 1 2em;
+      text-align: center;
+    }
+
+    &.assignees, &.user, &.created_at, &.updated_at, &.closed_at {
+      display: none;
+    }
   }
 }

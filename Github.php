@@ -43,10 +43,10 @@ class Github
             $name = ucwords(implode(' ', explode('_', $name)));
 
             if (is_array($property)) {
-                $out .= '<h4 class="label">' . $name . '</h4>';
+                $out .= '<h4 class="friendly-name">' . $name . '</h4>';
                 $out .= new Collection($property);
             } else {
-                $out .= '<h4 class="label">' . $name . '</h4>' . $property . '</li>';
+                $out .= '<h4 class="friendly-name">' . $name . '</h4>' . $property . '</li>';
             }
         }
         $out .= '</ul>';
@@ -90,9 +90,9 @@ class Issue extends Github
     public $assignee;
     public $state;
 
+    public $assignees;
     public $user;
     public $id;
-    public $assignees;
     public $created_at;
     public $updated_at;
     public $closed_at;
@@ -149,18 +149,12 @@ class User extends Github
 
 class Label extends Github
 {
-    public $prefix;
-    public $id;
-    public $name;
-    public $color;
     public $description;
+    public $name;
 
     public function __construct($labelData)
     {
-        $this->prefix = substr($labelData->name, 0, 1);
         $this->name = substr($labelData->name, 3);
-        $this->id = $labelData->id;
-        $this->color = $labelData->color;
         $this->description = $labelData->description;
     }
 }
