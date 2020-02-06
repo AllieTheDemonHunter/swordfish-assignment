@@ -27,6 +27,7 @@ body {
 .issues {
   > .collection {
     > li:first-child {
+      background: silver;
       .issue > li > .friendly-name {
         display: block;
       }
@@ -40,6 +41,10 @@ body {
     display: block;
     padding: 0 1rem;
     margin: 0;
+
+    .description {
+      color: green;
+    }
   }
 
   > .collection {

@@ -12,8 +12,10 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: 0.8vw; }
 
-.issues > .collection > li:first-child .issue > li > .friendly-name {
-  display: block; }
+.issues > .collection > li:first-child {
+  background: silver; }
+  .issues > .collection > li:first-child .issue > li > .friendly-name {
+    display: block; }
 
 .labels {
   flex-grow: 1 !important; }
@@ -21,6 +23,8 @@ body {
     display: block;
     padding: 0 1rem;
     margin: 0; }
+    .labels .label .description {
+      color: green; }
   .labels > .collection {
     outline: 1px dashed magenta;
     display: flex;
