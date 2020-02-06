@@ -38,7 +38,7 @@ class gitHub
              * POST /repos/:owner/:repo/issues
              */
 
-            $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues');
+            $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME );
             echo '<h3>Logged In</h3>';
             print '<pre>' . json_encode($response) . '<pre>';
             exit('Left at:' . __LINE__); // I don't like die().
