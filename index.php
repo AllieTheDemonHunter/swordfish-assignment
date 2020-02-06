@@ -43,9 +43,12 @@ class gitHub
 
                 . '/issues?state=closed'
             );
+            $response += $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+
+                . '/issues?state=closed'
+            );
             echo '<h3>Logged In</h3>';
             print '<pre>' . json_encode($response) . '<pre>';
-            exit('Left at:' . __LINE__); // I don't like die().
         }
 
         if ($this->get('code')) {
