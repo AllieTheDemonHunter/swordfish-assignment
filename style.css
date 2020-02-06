@@ -1,0 +1,26 @@
+ul {
+  list-style: none;
+  padding: 0; }
+
+.id, .url, .label {
+  display: none; }
+
+li {
+  padding: 0; }
+
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 0.8vw; }
+
+.issues > .collection > li:first-child .issue > li > .label {
+  display: block; }
+
+.labels .label {
+  display: block; }
+
+.issue {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between; }
+  .issue > li {
+    flex: 0 1 10vw; }

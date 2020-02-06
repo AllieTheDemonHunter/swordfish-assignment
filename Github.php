@@ -17,12 +17,41 @@ class Collection extends \ArrayObject
 
     public function __toString()
     {
-        $output = '<div class="collection">';
+        $caller = explode('\\', get_called_class());
+        $invoked = array_pop($caller);
+        $output = '<ul class="' . strtolower($invoked) . '">';
+
         foreach ($this as $key => $value) {
-            $output .= $value;
+            $output .= '<li>' . $value . '</li>';
         }
-        $output .= '</div>';
+
+        $output .= '</ul>';
         return $output;
+    }
+}
+
+class Github
+{
+    public function __toString()
+    {
+        $caller = explode('\\', get_called_class());
+        $invoked = array_pop($caller);
+        $out = '<ul class="' . strtolower($invoked) . '">';
+        foreach ($this as $name => $property) {
+            // The order here is important/
+            $out .= '<li class="'.strtolower($name).'">';
+            $name = ucwords(implode(' ', explode('_', $name)));
+
+            if (is_array($property)) {
+                $out .= '<h4 class="label">' . $name . '</h4>';
+                $out .= new Collection($property);
+            } else {
+                $out .= '<h4 class="label">' . $name . '</h4>' . $property . '</li>';
+            }
+        }
+        $out .= '</ul>';
+
+        return $out;
     }
 }
 
@@ -39,7 +68,7 @@ class When extends \DateTime
     }
 }
 
-class Base
+class Base extends Github
 {
     public $issues;
 
@@ -49,51 +78,24 @@ class Base
             $this->issues[] = new Issue($issue);
         }
     }
-
-    public function __toString()
-    {
-        $issues = '<ul class="base">';
-        foreach ($this->issues as $issue) {
-            $issues .= '<li>';
-            $issues .= $issue;
-            $issues .= '</li>';
-        }
-        $issues .= '</ul>';
-
-        return $issues;
-    }
 }
 
-class Issue
+class Issue extends Github
 {
-    public $title;
-    public $user;
     public $number;
-    public $id;
+    public $title;
+    public $body;
+
     public $labels;
-    public $state;
     public $assignee;
+    public $state;
+
+    public $user;
+    public $id;
     public $assignees;
     public $created_at;
     public $updated_at;
     public $closed_at;
-    public $body;
-
-    public function __toString()
-    {
-        $issue_properties = $this;
-        $issue_property = '<ul class="issue">';
-        foreach ($issue_properties as $property) {
-            $issue_property .= '<li>';
-            if (is_array($property)) {
-                $property = new Collection($property);
-            }
-            $issue_property .= $property . '</li>';
-        }
-        $issue_property .= '</ul>';
-
-        return $issue_property;
-    }
 
     public function __construct($issueData)
     {
@@ -129,24 +131,11 @@ class Issue
     }
 }
 
-class User
+class User extends Github
 {
     public $login;
     public $id;
     public $url;
-
-    public function __toString()
-    {
-
-        $issue_property = '<ul class="user">';
-
-        foreach ($this as $property) {
-            $issue_property .= '<li>' . $property . '</li>';
-        }
-        $issue_property .= '</ul>';
-
-        return $issue_property;
-    }
 
     public function __construct($userData)
     {
@@ -158,32 +147,18 @@ class User
     }
 }
 
-class Label
+class Label extends Github
 {
     public $prefix;
     public $id;
     public $name;
     public $color;
-    public $default;
     public $description;
-
-    public function __toString()
-    {
-        $issue_property = '<ul class="label">';
-
-        foreach ($this as $property) {
-            $issue_property .= '<li>' . $property . '</li>';
-        }
-
-        $issue_property .= '</ul>';
-
-        return $issue_property;
-    }
 
     public function __construct($labelData)
     {
         $this->prefix = substr($labelData->name, 0, 1);
-        $this->name = substr($labelData->name, 4, 1);
+        $this->name = substr($labelData->name, 3);
         $this->id = $labelData->id;
         $this->color = $labelData->color;
         $this->description = $labelData->description;
