@@ -39,14 +39,16 @@ class gitHub
              * /search/issues?q={is%3Aissue}{&page,per_page,sort,order}
              */
 
-            $response = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+            $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
 
                 . '/issues?state=open'
             );
-            $response += $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+
+            $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
 
                 . '/issues?state=closed'
             );
+            $response = array_merge($open,$closed);
             echo '<h3>Logged In</h3>';
             print '<pre>' . json_encode($response) . '<pre>';
             exit();
