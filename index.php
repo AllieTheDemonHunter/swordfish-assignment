@@ -42,6 +42,7 @@ $newIssue = [
         'assignees' => 'AllieTheDemonHunter'
 ];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue,['Authorization: token '.$gitHub->session('access_token')]);
+print_r($labels);
 print_r($gitHub);
 ?>
 </body>
