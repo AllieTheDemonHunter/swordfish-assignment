@@ -1,4 +1,8 @@
 <?php
+namespace GitAllie;
+
+use gitHubController;
+
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('APP_NAME', 'swordfish-assignment');
@@ -15,7 +19,7 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
-$base = new \GitAllie\Base($gitHub);
+$base = new Base($gitHub);
 ?>
 
 <!DOCTYPE html>
@@ -31,11 +35,11 @@ $base = new \GitAllie\Base($gitHub);
 print $base;
 
 //Make a form
-$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+/*$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 print '<pre>' . $labelsUrl . '</pre>';
 $newIssue = ['title' => 'test-', 'body' => 'more'];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
-print_r($labels);
+print_r($labels);*/
 ?>
 </body>
 </html>
