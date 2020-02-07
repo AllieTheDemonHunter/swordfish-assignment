@@ -5,7 +5,7 @@ use gitHubController;
 
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-define('APP_NAME', 'swordfish-assignment');
+define('APP_NAME', 'leadtrekker');
 define('APP_NAME_LOCAL', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('DOMAIN', 'allie.co.za');
