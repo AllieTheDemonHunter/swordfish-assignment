@@ -52,6 +52,7 @@ class gitHub
 
             $response = (array_merge($open,$closed));
             echo '<h3>Logged In</h3>';
+            $gitHub = $this;
             include_once 'egress.php';
             exit();
         }
