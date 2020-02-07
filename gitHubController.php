@@ -28,7 +28,7 @@ class gitHubController
             );
 
             $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-                . '/labels'
+                . '/issues?state=closed'
             );
 
             $this->response = (array_merge($open, $closed));
