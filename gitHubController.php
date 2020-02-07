@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class gitHub
  */
@@ -19,16 +20,6 @@ class gitHubController
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
 
         if ($this->session('access_token')) {
-            /**
-             * Verbs
-             * These should all be accessible via an API
-             *  Which we're not using.
-             *
-             * GET /repos/:owner/:repo/issues/:issue_number
-             * POST /repos/:owner/:repo/issues
-             * /search/issues?q={is%3Aissue}{&page,per_page,sort,order}
-             */
-
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=open'
             );
@@ -37,7 +28,7 @@ class gitHubController
                 . '/issues?state=closed'
             );
 
-            $response = (array_merge($open,$closed));
+            $response = (array_merge($open, $closed));
             echo '<h3>Logged In</h3>';
             return $response;
         }
@@ -88,7 +79,7 @@ class gitHubController
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
         echo '<p><a href="?login=1">Log In</a></p>';
-
+        exit();
     }
 
     /**
