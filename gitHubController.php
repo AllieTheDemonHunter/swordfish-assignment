@@ -11,6 +11,7 @@ class gitHubController
      */
     public $base_url;
     public $response;
+    public $token;
 
     /**
      * gitHub constructor.
@@ -19,9 +20,9 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
+        $this->token = $this->session('access_token');
+        if ($this->token) {
 
-        if ($this->session('access_token')) {
-            $this->token = $this->session('access_token');
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=open'
             );
@@ -102,7 +103,7 @@ class gitHubController
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
-        return json_decode($this->$response);
+        return json_decode($this->response);
     }
 }
 
