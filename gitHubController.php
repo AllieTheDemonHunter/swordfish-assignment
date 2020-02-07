@@ -29,7 +29,6 @@ class gitHubController
             );
 
             $response = (array_merge($open, $closed));
-            print_r($response);
             echo '<h3>Logged In</h3>';
             return $response;
         }
