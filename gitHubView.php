@@ -32,7 +32,6 @@ class Collection extends \ArrayObject
 
 class gitHubView
 {
-    public $blank_indicator = '-';
     public function __toString()
     {
         $caller = explode('\\', get_called_class());
@@ -128,7 +127,6 @@ class Issue extends gitHubView
             $this->updated_at = new When($issueData->updated_at);
         } catch (\Exception $e) {
         }
-
     }
 }
 
