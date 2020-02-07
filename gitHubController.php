@@ -99,11 +99,12 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
         if ($this->token)
-            $headers[] = 'Authorization: Bearer ' . $this->token;
+            $headers[] = 'Authorization: token ' . $this->token;
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
         print_r(curl_getinfo($ch));
+
         return json_decode($this->response);
     }
 }
