@@ -141,7 +141,7 @@ class User extends gitHubView
     public function __construct($userData)
     {
         if (empty($userData)) {
-            $this->login = $this->blank_indicator;
+            $this->login = '-';
         } else {
             $this->login = $userData->login;
             $this->id = $userData->id;
@@ -158,8 +158,8 @@ class Label extends gitHubView
     public function __construct($labelData)
     {
         if (empty($labelData)) {
-            $this->name = $this->blank_indicator;
-            $this->description = $this->blank_indicator;
+            $this->name = '-';
+            $this->description = '-';
         } else {
             $this->name = substr($labelData->name, 3);
             $this->description = $labelData->description;
