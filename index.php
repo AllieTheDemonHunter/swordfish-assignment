@@ -38,8 +38,7 @@ print $base;
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = ['title' => 'test-', 'body' => 'more'];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue,['Authorization: token '.$gitHub->session('access_token')]);
-print_r($labels);
-print_r($gitHub->session('access_token'));
+print_r($gitHub);
 ?>
 </body>
 </html>
