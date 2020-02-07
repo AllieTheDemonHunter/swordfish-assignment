@@ -10,19 +10,22 @@ define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
-/**
- * The problem is with the functions found in the trait, the get() and session() methods should function as
- * checks for the presence of URI _keys_. Not request their values - that will be done once these functions have
- * confirmed that there is a key available.
- */
-
 session_start();
 
+/**
+ * Class gitHub
+ */
 class gitHub
 {
     use gitHubTrait;
+    /**
+     * @var string
+     */
     public $base_url;
 
+    /**
+     * gitHub constructor.
+     */
     function __construct()
     {
         //Making life easier.
@@ -40,17 +43,16 @@ class gitHub
              */
 
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-
                 . '/issues?state=open'
             );
 
             $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-
                 . '/issues?state=closed'
             );
-            $response = array_merge($open,$closed);
+
+            $response = json_encode(array_merge($open,$closed));
             echo '<h3>Logged In</h3>';
-            print '<pre>' . json_encode($response) . '<pre>';
+            include_once 'egress.php';
             exit();
         }
 
@@ -103,6 +105,12 @@ class gitHub
 
     }
 
+    /**
+     * @param $url
+     * @param bool $post
+     * @param array $headers
+     * @return mixed
+     */
     function apiRequest($url, $post = FALSE, $headers = array())
     {
         $ch = curl_init($url);
@@ -120,27 +128,37 @@ class gitHub
     }
 }
 
+/**
+ * Trait gitHubTrait
+ */
 trait gitHubTrait
 {
+    /**
+     * @param $key
+     * @param null $default
+     * @return bool|mixed|null
+     */
     function get($key, $default = NULL)
     {
         if (isset($_GET)) {
-            $r = array_key_exists($key, $_GET) ? $_GET[$key] : $default;
-            return $r;
+            return array_key_exists($key, $_GET) ? $_GET[$key] : $default;
         }
         return false;
     }
 
+    /**
+     * @param $key
+     * @param null $default
+     * @return bool|mixed|null
+     */
     function session($key, $default = NULL)
     {
         if (isset($_SESSION)) {
-            $r = array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
-            return $r;
+            return array_key_exists($key, $_SESSION) ? $_SESSION[$key] : $default;
         }
 
         return false;
     }
 }
 
-// Printing the class' output for now
 new Github();

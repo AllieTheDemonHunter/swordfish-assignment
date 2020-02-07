@@ -22,7 +22,11 @@ class Collection extends \ArrayObject
         $output = '<ul class="' . strtolower($invoked) . '">';
 
         foreach ($this as $key => $value) {
-            $output .= '<li>' . $value . '</li>';
+            $item_class = '';
+            if (isset($value->description)) {
+                $item_class = strtolower(str_replace(' ', '-',$value->description));
+            }
+            $output .= '<li class="' . $item_class . '">' . $value . '</li>';
         }
 
         $output .= '</ul>';
@@ -39,7 +43,7 @@ class Github
         $out = '<ul class="' . strtolower($invoked) . '">';
         foreach ($this as $name => $property) {
             // The order here is important/
-            $out .= '<li class="'.strtolower($name).'">';
+            $out .= '<li class="' . strtolower($name) . '">';
             $name = ucwords(implode(' ', explode('_', $name)));
 
             if (is_array($property)) {
@@ -84,11 +88,11 @@ class Issue extends Github
 {
     public $number;
     public $title;
-    public $body;
-
-    public $labels;
-    public $assignee;
     public $state;
+
+    public $body;
+    public $assignee;
+    public $labels;
 
     public $assignees;
     public $user;
@@ -101,17 +105,17 @@ class Issue extends Github
     {
         $this->user = new User($issueData->user);
 
-        if (!empty($issueData->labels)) {
-            foreach ($issueData->labels as $label) {
-                $this->labels[] = new Label($label);
-            }
+        //if (!empty($issueData->labels)) {
+        foreach ($issueData->labels as $label) {
+            $this->labels[] = new Label($label);
         }
+        //}
 
-        if (!empty($issueData->assignees)) {
-            foreach ($issueData->assignees as $user) {
-                $this->assignees[] = new User($user);
-            }
+        //if (!empty($issueData->assignees)) {
+        foreach ($issueData->assignees as $user) {
+            $this->assignees[] = new User($user);
         }
+        //}
 
         $this->title = $issueData->title;
         $this->number = $issueData->number;
@@ -139,7 +143,9 @@ class User extends Github
 
     public function __construct($userData)
     {
-        if (!empty($userData)) {
+        if (empty($userData)) {
+            $this->login = '-';
+        } else {
             $this->login = $userData->login;
             $this->id = $userData->id;
             $this->url = $userData->url;
@@ -154,7 +160,12 @@ class Label extends Github
 
     public function __construct($labelData)
     {
-        $this->name = substr($labelData->name, 3);
-        $this->description = $labelData->description;
+        if (empty($labelData)) {
+            $this->name = '-';
+            $this->description = '-';
+        } else {
+            $this->name = substr($labelData->name, 3);
+            $this->description = $labelData->description;
+        }
     }
 }

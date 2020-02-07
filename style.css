@@ -10,32 +10,48 @@ li {
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-size: 0.8vw; }
+  font-size: 11px; }
 
-.issues > .collection > li:first-child {
+.issues > .collection > li:first-child .issue > li > .friendly-name {
+  display: block;
+  margin: 1rem 0;
   background: silver; }
-  .issues > .collection > li:first-child .issue > li > .friendly-name {
-    display: block; }
 
-.labels {
-  flex-grow: 1 !important; }
-  .labels .label {
-    display: block;
-    padding: 0 1rem;
-    margin: 0; }
-    .labels .label .description {
-      color: green; }
-  .labels > .collection {
-    outline: 1px dashed magenta;
-    display: flex;
-    flex-flow: row nowrap; }
-    .labels > .collection ul.label {
-      width: 100px;
-      color: red; }
-      .labels > .collection ul.label .friendly-name {
-        display: none; }
-  .labels > .friendly-name {
-    display: none !important; }
+.issues > .collection > li:first-child .description {
+  display: block !important;
+  margin: 1rem 0;
+  color: black;
+  font-weight: bold;
+  background: silver; }
+
+.labels .label {
+  display: block;
+  margin: 0; }
+  .labels .label .description {
+    color: green;
+    display: none; }
+
+.labels > .collection {
+  display: inline-grid;
+  grid-template-columns: 100px 100px 100px;
+  grid-template-rows: 1rem; }
+  .labels > .collection .client-label {
+    grid-column-start: 1;
+    grid-column-end: 2; }
+  .labels > .collection .priority-label {
+    grid-column-start: 2;
+    grid-column-end: 3; }
+  .labels > .collection .type-label {
+    grid-column-start: 3;
+    grid-column-end: 4; }
+  .labels > .collection ul.label {
+    width: 100px;
+    color: red; }
+    .labels > .collection ul.label .friendly-name {
+      display: none; }
+
+.labels > .friendly-name {
+  display: none !important; }
 
 .description > .label {
   display: none; }
@@ -45,12 +61,21 @@ body {
 
 .issue {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start; }
+  flex-flow: row nowrap; }
   .issue > li {
-    flex: 0 1 10vw; }
+    flex: 0 1 auto; }
     .issue > li.number {
-      flex: 0 1 2em;
+      flex: 0 0 100px;
       text-align: center; }
+    .issue > li.title {
+      flex: 0 0 190px; }
+    .issue > li.body {
+      flex: 0 0 280px; }
+    .issue > li.labels {
+      flex: 0 0 190px; }
+    .issue > li.state {
+      flex: 0 0 50px; }
+    .issue > li.assignee {
+      flex: 0 0 180px; }
     .issue > li.assignees, .issue > li.user, .issue > li.created_at, .issue > li.updated_at, .issue > li.closed_at {
       display: none; }

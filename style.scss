@@ -17,43 +17,64 @@ li {
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-size: 0.8vw;
-}
-
-.collection {
-
+  font-size: 11px;
 }
 
 .issues {
   > .collection {
     > li:first-child {
-      background: silver;
       .issue > li > .friendly-name {
         display: block;
+        margin: 1rem 0;
+        background: silver;
+      }
+
+      .description {
+        display: block !important;
+        margin: 1rem 0;
+        color: rgb(0, 0, 0);
+        font-weight: bold;
+        background: silver;
       }
     }
   }
 }
 
 .labels {
-  flex-grow: 1 !important;
   .label {
     display: block;
-    padding: 0 1rem;
     margin: 0;
 
     .description {
       color: green;
+      display: none;
     }
   }
 
   > .collection {
-    outline: 1px dashed rgb(255, 0, 255);
-    display: flex;
-    flex-flow: row nowrap;
+    display: inline-grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 1rem;
+
+    .client-label {
+      grid-column-start: 1;
+      grid-column-end: 2;
+    }
+
+    .priority-label {
+      grid-column-start: 2;
+      grid-column-end: 3;
+    }
+
+    .type-label {
+      grid-column-start: 3;
+      grid-column-end: 4;
+    }
+
     ul.label {
       width: 100px;
-      color: red;
+      color: rgb(255, 0, 0);
+
       .friendly-name {
         display: none;
       }
@@ -76,14 +97,33 @@ body {
 .issue {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
 
   > li {
-    flex: 0 1 10vw;
+    flex: 0 1 auto;
 
     &.number {
-      flex: 0 1 2em;
+      flex: 0 0 100px;
       text-align: center;
+    }
+
+    &.title {
+      flex: 0 0 190px;
+    }
+
+    &.body {
+      flex: 0 0 280px;
+    }
+
+    &.labels {
+      flex: 0 0 190px;
+    }
+
+    &.state {
+      flex: 0 0 50px;
+    }
+
+    &.assignee {
+      flex: 0 0 180px;
     }
 
     &.assignees, &.user, &.created_at, &.updated_at, &.closed_at {
