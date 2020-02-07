@@ -50,7 +50,7 @@ class gitHub
                 . '/issues?state=closed'
             );
 
-            $response = json_encode(array_merge($open,$closed));
+            $response = (array_merge($open,$closed));
             echo '<h3>Logged In</h3>';
             include_once 'egress.php';
             exit();
