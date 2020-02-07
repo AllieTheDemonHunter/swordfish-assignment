@@ -103,7 +103,7 @@ class gitHubController
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
-        print_r(curl_error($ch));
+        print_r(curl_getinfo($ch));
         return json_decode($this->response);
     }
 }
