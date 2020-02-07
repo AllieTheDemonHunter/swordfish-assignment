@@ -37,13 +37,12 @@ print $base;
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
-        'title' => 'test-',
-        'body' => 'more',
-        'assignees' => 'AllieTheDemonHunter'
+    'title' => 'test-',
+    'body' => 'more',
+    'assignees' => 'AllieTheDemonHunter'
 ];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 print_r($labels);
-print_r($gitHub);
 ?>
 </body>
 </html>
