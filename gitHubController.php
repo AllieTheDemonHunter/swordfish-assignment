@@ -30,7 +30,14 @@ class gitHubController
             $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=closed'
             );
-
+            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+            $newIssue = [
+                'title' => 'test-',
+                'body' => 'more',
+                'assignees' => 'AllieTheDemonHunter'
+            ];
+            $labels = $this->apiRequest($labelsUrl, $newIssue);
+            print_r($labels);
             $this->response = (array_merge($open, $closed));
             echo '<h3>Logged In</h3>';
             return $this->response;
