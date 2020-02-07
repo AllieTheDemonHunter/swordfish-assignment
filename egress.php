@@ -13,6 +13,7 @@ print $base;
 
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+print '<pre>' . $labelsUrl . '</pre>';
 $labels = $gitHub->apiRequest($labelsUrl, ['title' => 'test-' . date('Y-m-d H:i')]);
 print_r($labels);
 ?>
