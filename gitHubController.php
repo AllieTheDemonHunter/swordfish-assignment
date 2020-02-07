@@ -21,6 +21,7 @@ class gitHubController
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
 
         if ($this->session('access_token')) {
+            $this->token = $this->session('access_token');
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=open'
             );
@@ -97,11 +98,11 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
         if ($this->session('access_token'))
-            $headers[] = 'Authorization: Bearer ' . $this->session('access_token');
+            $headers[] = 'Authorization: Bearer ' . $this->token;
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($ch);
-        return json_decode($response);
+        $this->response = curl_exec($ch);
+        return json_decode($this->$response);
     }
 }
 
