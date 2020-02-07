@@ -1,9 +1,5 @@
 <?php
 
-/**
- * This is the base Github interface.
- */
-
 namespace GitAllie;
 
 use DateTimeZone;
@@ -34,7 +30,7 @@ class Collection extends \ArrayObject
     }
 }
 
-class Github
+class gitHubView
 {
     public function __toString()
     {
@@ -72,7 +68,7 @@ class When extends \DateTime
     }
 }
 
-class Base extends Github
+class Base extends gitHubView
 {
     public $issues;
 
@@ -84,7 +80,7 @@ class Base extends Github
     }
 }
 
-class Issue extends Github
+class Issue extends gitHubView
 {
     public $number;
     public $title;
@@ -135,7 +131,7 @@ class Issue extends Github
     }
 }
 
-class User extends Github
+class User extends gitHubView
 {
     public $login;
     public $id;
@@ -153,7 +149,7 @@ class User extends Github
     }
 }
 
-class Label extends Github
+class Label extends gitHubView
 {
     public $description;
     public $name;
