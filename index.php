@@ -15,14 +15,8 @@ define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
 session_start();
-include_once 'gitHubController.php';
-include_once 'gitHubView.php';
 
-$gitHub = new gitHubController();
-$base = new Base($gitHub->response);
-?>
-
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -31,7 +25,11 @@ $base = new Base($gitHub->response);
 </head>
 <body>
 <?php
+include_once 'gitHubController.php';
+include_once 'gitHubView.php';
 
+$gitHub = new gitHubController();
+$base = new Base($gitHub->response);
 print $base;
 
 //Make a form
