@@ -57,7 +57,7 @@ class gitHub
         }
 
         if ($this->get('code')) {
-            // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
+            // When Github redirects the user back here.
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
@@ -161,4 +161,4 @@ trait gitHubTrait
     }
 }
 
-new Github();
+$gitHub = new Github();
