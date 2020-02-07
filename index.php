@@ -43,6 +43,7 @@ $newIssue = [
 ];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 print_r($labels);
+print_r($gitHub);
 ?>
 </body>
 </html>
