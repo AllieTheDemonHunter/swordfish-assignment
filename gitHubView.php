@@ -20,7 +20,7 @@ class Collection extends \ArrayObject
         foreach ($this as $key => $value) {
             $item_class = '';
             if (isset($value->description)) {
-                $item_class = strtolower(str_replace(' ', '-',$value->description));
+                $item_class = strtolower(str_replace(' ', '-', $value->description));
             }
             $output .= '<li class="' . $item_class . '">' . $value . '</li>';
         }
@@ -101,17 +101,17 @@ class Issue extends gitHubView
     {
         $this->user = new User($issueData->user);
 
-        //if (!empty($issueData->labels)) {
-        foreach ($issueData->labels as $label) {
-            $this->labels[] = new Label($label);
+        if (!empty($issueData->labels)) {
+            foreach ($issueData->labels as $label) {
+                $this->labels[] = new Label($label);
+            }
         }
-        //}
 
-        //if (!empty($issueData->assignees)) {
-        foreach ($issueData->assignees as $user) {
-            $this->assignees[] = new User($user);
+        if (!empty($issueData->assignees)) {
+            foreach ($issueData->assignees as $user) {
+                $this->assignees[] = new User($user);
+            }
         }
-        //}
 
         $this->title = $issueData->title;
         $this->number = $issueData->number;
