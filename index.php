@@ -35,11 +35,11 @@ $base = new Base($gitHub->response);
 print $base;
 
 //Make a form
-/*$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 print '<pre>' . $labelsUrl . '</pre>';
 $newIssue = ['title' => 'test-', 'body' => 'more'];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
-print_r($labels);*/
+print_r($labels);
 ?>
 </body>
 </html>
