@@ -36,10 +36,10 @@ print $base;
 
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-print '<pre>' . $labelsUrl . '</pre>';
 $newIssue = ['title' => 'test-', 'body' => 'more'];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue,['Authorization: token '.$gitHub->session('access_token')]);
 print_r($labels);
+print_r($gitHub->session('access_token'));
 ?>
 </body>
 </html>
