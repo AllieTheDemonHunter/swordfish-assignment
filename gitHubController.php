@@ -102,6 +102,7 @@ class gitHubController
             $headers[] = 'Authorization: Bearer ' . $this->token;
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        print_r(curl_error($ch));
         $this->response = curl_exec($ch);
         return json_decode($this->response);
     }
