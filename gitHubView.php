@@ -32,6 +32,7 @@ class Collection extends \ArrayObject
 
 class gitHubView
 {
+    public $blank_indicator = '-';
     public function __toString()
     {
         $caller = explode('\\', get_called_class());
@@ -140,7 +141,7 @@ class User extends gitHubView
     public function __construct($userData)
     {
         if (empty($userData)) {
-            $this->login = '-';
+            $this->login = $this->blank_indicator;
         } else {
             $this->login = $userData->login;
             $this->id = $userData->id;
@@ -157,8 +158,8 @@ class Label extends gitHubView
     public function __construct($labelData)
     {
         if (empty($labelData)) {
-            $this->name = '-';
-            $this->description = '-';
+            $this->name = $this->blank_indicator;
+            $this->description = $this->blank_indicator;
         } else {
             $this->name = substr($labelData->name, 3);
             $this->description = $labelData->description;

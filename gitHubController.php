@@ -30,14 +30,7 @@ class gitHubController
             $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=closed'
             );
-            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-            $newIssue = [
-                'title' => 'test-',
-                'body' => 'more',
-                'assignees' => 'AllieTheDemonHunter'
-            ];
-            $labels = $this->apiRequest($labelsUrl, $newIssue);
-            print_r($labels);
+
             $this->response = (array_merge($open, $closed));
             echo '<h3>Logged In</h3>';
             return $this->response;
@@ -106,7 +99,7 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
         if ($this->session('access_token'))
-            $headers[] = 'Authorization: Bearer ' . $this->token;
+            $headers[] = 'Authorization: token ' . $this->token;
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
