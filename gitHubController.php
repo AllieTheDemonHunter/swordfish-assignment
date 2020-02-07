@@ -10,6 +10,7 @@ class gitHubController
      * @var string
      */
     public $base_url;
+    public $response;
 
     /**
      * gitHub constructor.
@@ -28,9 +29,9 @@ class gitHubController
                 . '/issues?state=closed'
             );
 
-            $response = (array_merge($open, $closed));
+            $this->response = (array_merge($open, $closed));
             echo '<h3>Logged In</h3>';
-            return $response;
+            return $this->response;
         }
 
         if ($this->get('code')) {
@@ -53,7 +54,6 @@ class gitHubController
             header('Location: ' . $this->base_url);
             exit();
         }
-
 
         if ($this->get('login')) {
             // Send the user to Github's authorization page

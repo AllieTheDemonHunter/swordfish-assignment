@@ -20,7 +20,7 @@ include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
 print_r($gitHub);
-$base = new Base($gitHub);
+$base = new Base($gitHub->response);
 ?>
 
 <!DOCTYPE html>
