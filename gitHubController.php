@@ -62,7 +62,7 @@ class gitHubController
                 'code' => $this->get('code'),
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
-            $_SESSION['access_token'] = $token->access_token;
+            $token->access_token = $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
             exit();
         }
