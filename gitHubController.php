@@ -1,4 +1,14 @@
 <?php
+define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
+define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
+define('APP_NAME', 'swordfish-assignment');
+define('APP_NAME_LOCAL', 'swordhunter');
+define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+define('DOMAIN', 'allie.co.za');
+define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
+define('AUTH_URL', 'https://github.com/login/oauth/authorize');
+define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
+define('API_URL', 'https://api.github.com');
 
 /**
  * Class gitHub
@@ -11,7 +21,7 @@ class gitHubController
      */
     public $base_url;
     public $response;
-    public $token;
+    public $access_token;
 
     /**
      * gitHub constructor.
@@ -20,8 +30,8 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
-        $this->token = $this->session('access_token');
-        if ($this->token) {
+        $this->access_token = $this->session('access_token');
+        if ($this->access_token) {
 
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=open'
@@ -50,6 +60,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
+                'debug' => 'true',
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token->access_token;
@@ -97,8 +108,8 @@ class gitHubController
         if ($post)
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         $headers[] = 'Accept: application/json';
-        if ($this->token) {
-            $headers[] = 'Authorization: access_token ' . $this->token;
+        if ($this->access_token) {
+            $headers[] = 'Authorization: access_token ' . $this->access_token;
         }
         $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
