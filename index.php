@@ -10,7 +10,14 @@ include_once 'gitHubView.php';
 $gitHub = new gitHubController();
 $base = new Base($gitHub->response);
 
-
+//Make a form
+$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+$newIssue = [
+    'title' => 'test-',
+    'body' => 'more',
+    'assignees' => ['AllieTheDemonHunter']
+];
+$labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
