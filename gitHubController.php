@@ -30,7 +30,7 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
-        $this->access_token = $this->session('access_token');
+        $this->access_token = $this->session('access_token')->access_token;
         if ($this->access_token) {
 
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
@@ -62,7 +62,7 @@ class gitHubController
                 'code' => $this->get('code'),
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
-            $_SESSION['access_token'] = $token->access_token;
+            $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
             return 1;
         }
