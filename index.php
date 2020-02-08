@@ -37,7 +37,7 @@ $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
     'title' => 'test-',
     'body' => 'more',
-    'assignees' => 'AllieTheDemonHunter'
+    'assignees' => ['AllieTheDemonHunter']
 ];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 print_r($labels);
