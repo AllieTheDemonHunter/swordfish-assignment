@@ -60,7 +60,6 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
-                'debug' => 'true',
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token->access_token;
