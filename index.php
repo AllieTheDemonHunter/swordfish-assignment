@@ -9,7 +9,7 @@ include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
 $base = new Base($gitHub->response);
-print $base;
+
 
 ?><!DOCTYPE html>
 <html lang="en">
@@ -22,8 +22,7 @@ print $base;
 <?php
 
 
-
-print_r($labels);
+print $base;
 ?>
 </body>
 </html>
