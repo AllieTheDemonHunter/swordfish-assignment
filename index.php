@@ -28,7 +28,7 @@ $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 <body>
 <?php
 
-
+print_r($labels);
 print $base;
 ?>
 </body>
