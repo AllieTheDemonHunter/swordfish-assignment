@@ -41,7 +41,7 @@ class gitHubController
                 . '/issues?state=closed'
             );
 
-            $this->response = array_reverse(array_merge($open, $closed));
+            $this->response = array_reverse(array_merge($closed, $open));
             echo '<h3>Logged In</h3>';
             return $this->response;
         }
