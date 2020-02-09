@@ -104,8 +104,9 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        if ($post)
+        if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+        }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
             $headers[] = 'Authorization: token ' . $this->access_token;
