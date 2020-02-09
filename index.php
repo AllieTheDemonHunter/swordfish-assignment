@@ -13,10 +13,7 @@ $base = new Base($gitHub->response);
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
-    'title' => 'test-',
-    'body' => 'more',
-    'assignees' => ['AllieTheDemonHunter']
-];
+    'title' => 'test-'];
 $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 ?><!DOCTYPE html>
 <html lang="en">
