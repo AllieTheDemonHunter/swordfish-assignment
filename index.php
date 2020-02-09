@@ -14,7 +14,7 @@ $base = new Base($gitHub->response);
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
     'title' => 'test-'];
-$labels = $gitHub->apiRequest($labelsUrl, $newIssue);
+$labels = $gitHub->apiRequest($labelsUrl, json_encode($newIssue));
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
