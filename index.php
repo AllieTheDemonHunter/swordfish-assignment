@@ -14,7 +14,9 @@ $base = new Base($gitHub->response);
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
     'title' => 'test-'];
-$labels = $gitHub->apiRequest($labelsUrl, $newIssue);
+$issue = new \stdClass();
+$issue->title = 'testpp';
+$labels = $gitHub->apiRequest($labelsUrl, $issue);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
