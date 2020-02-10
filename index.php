@@ -9,8 +9,7 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
-print_r($gitHub);
-print_r($_REQUEST);
+
 $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
     . '/issues?state=open'
 );
@@ -23,11 +22,8 @@ if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
     $response = array_reverse(array_merge($closed, $open));
     $base = new Base($response);
 }
-
-
-if(!empty($labels)) {
-    print_r($labels);
-}
+print_r($gitHub);
+print_r($_REQUEST);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
