@@ -1,9 +1,9 @@
 <?php
-define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-define('APP_NAME', 'swordfish-assignment');
+define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
+define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
+define('APP_NAME', 'GitIntegration');
 define('APP_NAME_LOCAL', 'swordhunter');
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+define('GITHUB_ACCOUNT', 'SwordfishCode');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
@@ -33,9 +33,8 @@ class gitHubController
         $this->access_token = $this->session('access_token')->access_token;
         if ($this->access_token) {
 
-
+            echo '<h3>Logged In</h3>';
         }
-
         if ($this->get('code')) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
