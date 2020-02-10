@@ -1,9 +1,17 @@
 <?php
+/*define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
+define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
+define('APP_NAME', 'GitIntegration');
+define('GITHUB_ACCOUNT', 'SwordfishCode');*/
+
+
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('APP_NAME', 'swordfish-assignment');
-define('APP_NAME_LOCAL', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+
+
+define('APP_NAME_LOCAL', 'swordhunter');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
@@ -22,6 +30,14 @@ class gitHubController
     public $base_url;
     public $response;
     public $access_token;
+    /**
+     * @var mixed
+     */
+    public $curl_info;
+    /**
+     * @var string|true
+     */
+    public $debug;
 
     /**
      * gitHub constructor.
@@ -31,21 +47,10 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         $this->access_token = $this->session('access_token')->access_token;
+        $this->debug = print_r($_REQUEST,1);
         if ($this->access_token) {
-
-            $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-                . '/issues?state=open'
-            );
-
-            $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-                . '/issues?state=closed'
-            );
-
-            $this->response = (array_merge($open, $closed));
-            echo '<h3>Logged In</h3>';
-            return $this->response;
+            return $this;
         }
-
         if ($this->get('code')) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
@@ -80,7 +85,7 @@ class gitHubController
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'scope' => 'user',
+                'scope' => 'repo',
                 'state' => $_SESSION['state']
             );
             // Redirect the user to Github's authorization page
@@ -104,16 +109,18 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        if ($post)
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+        if ($post) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+        }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
-            print_r($this);
-            $headers[] = 'Authorization: access_token ' . $this->access_token;
+            $headers[] = 'Authorization: token ' . $this->access_token;
         }
         $headers[] = 'User-Agent:' . APP_NAME;
+        $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
+        $this->curl_info = curl_getinfo($ch);
 
         return json_decode($this->response);
     }
