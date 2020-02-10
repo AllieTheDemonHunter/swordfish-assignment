@@ -84,7 +84,7 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => 'https://allie.co.za/swordhunter/',
+                'redirect_uri' => 'https://eyecandydecor.co.za/swordhunter/',
                 'scope' => 'repo',
                 'state' => $_SESSION['state']
             );
