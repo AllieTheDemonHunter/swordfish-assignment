@@ -8,7 +8,9 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
-print_r($gitHub); exit();
+print_r($gitHub);
+print_r($_REQUEST);
+exit();
 $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
     . '/issues?state=open'
 );
