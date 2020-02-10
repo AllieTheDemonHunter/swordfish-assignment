@@ -39,7 +39,7 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         $this->access_token = $this->session('access_token')->access_token;
-        $this->debug = print_r($_REQUEST);
+        $this->debug = print_r($_REQUEST,1);
         if ($this->access_token) {
             return $this;
         }
