@@ -31,10 +31,9 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         $this->access_token = $this->session('access_token')->access_token;
-        print_r($this);
         if ($this->access_token) {
 
-            echo '<h3>Logged In</h3>';
+            return $this;
         }
         if ($this->get('code')) {
             // When Github redirects the user back here.
