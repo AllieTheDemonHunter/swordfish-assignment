@@ -16,11 +16,11 @@ $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAM
 $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
     . '/issues?state=closed'
 );
-if(!empty($open) && !empty($closed)) {
+
+if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
     $response = array_reverse(array_merge($closed, $open));
     $base = new Base($response);
 }
-
 
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
