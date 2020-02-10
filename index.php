@@ -8,7 +8,16 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
-$base = new Base($gitHub->response);
+$open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+    . '/issues?state=open'
+);
+
+$closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+    . '/issues?state=closed'
+);
+
+$response = array_reverse(array_merge($closed, $open));
+$base = new Base($response);
 
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
