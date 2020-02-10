@@ -22,6 +22,10 @@ class gitHubController
     public $base_url;
     public $response;
     public $access_token;
+    /**
+     * @var mixed
+     */
+    public $curl_info;
 
     /**
      * gitHub constructor.
@@ -104,6 +108,7 @@ class gitHubController
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
+        $this->curl_info = curl_getinfo($ch);
 
         return json_decode($this->response);
     }
