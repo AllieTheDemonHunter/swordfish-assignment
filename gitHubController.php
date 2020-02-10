@@ -1,9 +1,17 @@
 <?php
-define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
+/*define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
 define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
 define('APP_NAME', 'GitIntegration');
+define('GITHUB_ACCOUNT', 'SwordfishCode');*/
+
+
+define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
+define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
+define('APP_NAME', 'swordfish-assignment');
+define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+
+
 define('APP_NAME_LOCAL', 'swordhunter');
-define('GITHUB_ACCOUNT', 'SwordfishCode');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
@@ -22,6 +30,14 @@ class gitHubController
     public $base_url;
     public $response;
     public $access_token;
+    /**
+     * @var mixed
+     */
+    public $curl_info;
+    /**
+     * @var string|true
+     */
+    public $debug;
 
     /**
      * gitHub constructor.
@@ -31,11 +47,10 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         $this->access_token = $this->session('access_token')->access_token;
+        $this->debug = print_r($_REQUEST,1);
         if ($this->access_token) {
-
-
+            return $this;
         }
-
         if ($this->get('code')) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
@@ -105,6 +120,7 @@ class gitHubController
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
+        $this->curl_info = curl_getinfo($ch);
 
         return json_decode($this->response);
     }
