@@ -30,6 +30,7 @@ $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
 
 
 print $base;
+print
 ?>
 </body>
 </html>
