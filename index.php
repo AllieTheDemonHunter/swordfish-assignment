@@ -24,12 +24,7 @@ if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
     $base = new Base($response);
 }
 
-//Make a form
-$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 
-$issue = new \stdClass();
-$issue->title = 'testpp';
-$labels = $gitHub->apiRequest($labelsUrl, $issue);
 if(!empty($labels)) {
     print_r($labels);
 }
@@ -45,7 +40,11 @@ if(!empty($labels)) {
 if(isset($base)) {
     print $base;
 }
-
+//Make a form
+$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+$issue = new \stdClass();
+$issue->title = 'testpp';
+$labels = $gitHub->apiRequest($labelsUrl, $issue);
 ?>
 </body>
 </html>
