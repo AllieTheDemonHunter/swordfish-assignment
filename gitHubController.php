@@ -69,7 +69,7 @@ class gitHubController
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'scope' => 'user',
+                'scope' => 'repo',
                 'state' => $_SESSION['state']
             );
             // Redirect the user to Github's authorization page
