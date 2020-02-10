@@ -8,7 +8,7 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
-print_r($gitHub);
+
 $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
     . '/issues?state=open'
 );
@@ -16,17 +16,21 @@ $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAM
 $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
     . '/issues?state=closed'
 );
+if(!empty($open) && !empty($closed)) {
+    $response = array_reverse(array_merge($closed, $open));
+    $base = new Base($response);
+}
 
-$response = array_reverse(array_merge($closed, $open));
-$base = new Base($response);
 
 //Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-$newIssue = [
-    'title' => 'test-'];
+
 $issue = new \stdClass();
 $issue->title = 'testpp';
 $labels = $gitHub->apiRequest($labelsUrl, $issue);
+if(!empty($labels)) {
+    print_r($labels);
+}
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,9 +40,10 @@ $labels = $gitHub->apiRequest($labelsUrl, $issue);
 </head>
 <body>
 <?php
+if(isset($base)) {
+    print $base;
+}
 
-print_r($labels);
-print $base;
 ?>
 </body>
 </html>
