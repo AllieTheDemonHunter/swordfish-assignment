@@ -6,14 +6,8 @@ use gitHubController;
 session_start();
 include_once 'gitHubController.php';
 include_once 'gitHubView.php';
-
-/*//Make a form
-$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-$newIssue = [
-    'title' => 'test-'];
-$issue = new \stdClass();
-$issue->title = 'testpp';
-$labels = $gitHub->apiRequest($labelsUrl, $issue);*/
+$gitHub = new gitHubController();
+$base = new Base($gitHub->response);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,9 +18,6 @@ $labels = $gitHub->apiRequest($labelsUrl, $issue);*/
 <body>
 <pre>
 <?php
-
-$gitHub = new gitHubController();
-$base = new Base($gitHub->response);
 print $base;
 ?></pre>
 </body>
