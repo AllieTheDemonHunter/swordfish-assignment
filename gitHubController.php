@@ -23,6 +23,7 @@ define('API_URL', 'https://api.github.com');
 class gitHubController
 {
     use gitHubTrait;
+
     /**
      * @var string
      */
@@ -45,15 +46,7 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
-        if ($this->session('access_token')) {
-            //Make a form
-            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-            $issue = new \stdClass();
-            $issue->title = 'testpp';
-            $labels = $this->apiRequest($labelsUrl, $issue);
-            print_r($labels);
-            return true;
-        }
+
         if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
@@ -93,6 +86,16 @@ class gitHubController
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
             exit();
+        }
+
+        if ($this->session('access_token')) {
+            //Make a form
+            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+            $issue = new \stdClass();
+            $issue->title = 'testpp';
+            $labels = $this->apiRequest($labelsUrl, $issue);
+            print_r($labels);
+            return true;
         } else {
             print_r($_REQUEST);
             print_r($_SESSION);
