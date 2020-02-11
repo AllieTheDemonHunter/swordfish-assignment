@@ -90,14 +90,15 @@ class gitHubController
 
         if ($this->session('access_token')) {
             //Make a form
+            
+                        print_r($_REQUEST);
+                        print_r($_SESSION);
+                        return true;
             $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
             $issue = new \stdClass();
             $issue->title = 'testpp';
             $labels = $this->apiRequest($labelsUrl, $issue);
-            print_r($labels);
-            print_r($_REQUEST);
-            print_r($_SESSION);
-            return true;
+
         } else {
             print_r($_REQUEST);
             print_r($_SESSION);
