@@ -83,7 +83,7 @@ class gitHubController
                 header('Location: ' . $this->base_url.'#redirected-form-not-an-empty-token');
                 exit();
             } else {
-                $this->debug($_REQUEST);
+                $this->debug($post_for_auth);
             }
         }
 
