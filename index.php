@@ -10,11 +10,11 @@ include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
 if($gitHub) {
-    $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO
+    $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
         . '/issues?state=open'
     );
 
-    $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO
+    $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
         . '/issues?state=closed'
     );
 
