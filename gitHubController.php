@@ -47,7 +47,6 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         $this->access_token = $this->session('access_token')->access_token;
-        $this->debug = print_r($_REQUEST,1);
         if ($this->session('access_token')) {
             return $this;
         }
@@ -70,7 +69,7 @@ class gitHubController
             ));
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
-            return 1;
+            exit();
         }
 
         if ($this->get('login')) {
@@ -116,7 +115,7 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         if ($this->session('access_token')) {
             print_r($_SESSION);
-            $headers[] = 'Authorization: token ' . $this->session('access_token');
+            $headers[] = 'Authorization: access_token ' . $this->session('access_token');
         }
         $headers[] = 'User-Agent:' . APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
