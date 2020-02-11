@@ -9,7 +9,17 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
+
+
 if($gitHub) {
+
+    //Make a form
+    $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+    $issue = new \stdClass();
+    $issue->title = 'testpp';
+    $labels = $gitHub->apiRequest($labelsUrl, $issue);
+    print_r($labels);
+
     $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
         . '/issues?state=open'
     );
@@ -33,14 +43,6 @@ if($gitHub) {
 </head>
 <body>
 <?php
-//Make a form
-$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-$newIssue = [
-    'title' => 'test-'];
-$issue = new \stdClass();
-$issue->title = 'testpp';
-$labels = $gitHub->apiRequest($labelsUrl, $issue);
-print_r($labels);
 
 if(isset($base)) {
     print $base;
