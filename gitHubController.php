@@ -58,8 +58,6 @@ class gitHubController
                 exit();
             }
 
-            print_r($_SESSION);print_r($_GET);die();
-
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
                 'client_id' => OAUTH2_CLIENT_ID,
@@ -68,11 +66,11 @@ class gitHubController
                 'state' => $this->get('state'),
                 'code' => $this->get('code'),
                 'scope' => 'repo',
-                'User-Agent' => APP_NAME //Need this for v.3.
+                'User-Agent' => 'swordhunter' //Need this for v.3.
             ));
 
             $_SESSION['access_token'] = $token;
-
+            print_r($_SESSION);die();
             header('Location: ' . $this->base_url);
             exit();
         }
