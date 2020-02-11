@@ -24,7 +24,6 @@ class gitHubController
      */
     public $base_url;
     public $response;
-    public $access_token;
 
     /**
      * gitHub constructor.
@@ -33,8 +32,8 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . OAUTH_APP_NAME;
-        $this->access_token = $this->session('access_token');
-        if ($this->access_token) {
+
+        if ($this->session('access_token')) {
 
             $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
                 . '/issues?state=open'
@@ -115,9 +114,8 @@ class gitHubController
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
-        if ($this->access_token) {
-            print_r($this->access_token);
-            $headers[] = 'Authorization: token ' . $this->access_token;
+        if ($this->session('access_token')) {
+            $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
 
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
