@@ -39,7 +39,7 @@ class gitHubController
             // Send the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
-            $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+            $_state = $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
 
             // Freshen up
             unset($_SESSION['access_token']);
@@ -49,7 +49,7 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => $this->base_url,
                 'login' => GITHUB_ACCOUNT,
-                'state' => $this->get('state'),
+                'state' => $_state,
                 'scope' => 'repo'
             );
 
