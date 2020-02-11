@@ -1,16 +1,9 @@
 <?php
-/*define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
-define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
-define('APP_NAME', 'GitIntegration');
-define('GITHUB_ACCOUNT', 'SwordfishCode');*/
-
-
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('APP_NAME', 'swordfish-assignment');
-
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('APP_NAME_LOCAL', 'swordhunter');
+define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
@@ -23,21 +16,12 @@ define('API_URL', 'https://api.github.com');
 class gitHubController
 {
     use gitHubTrait;
-
     /**
      * @var string
      */
     public $base_url;
     public $response;
     public $access_token;
-    /**
-     * @var mixed
-     */
-    public $curl_info;
-    /**
-     * @var string|true
-     */
-    public $debug;
 
     /**
      * gitHub constructor.
@@ -46,22 +30,28 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
+        $this->access_token = $this->session('access_token')->access_token;
+        if ($this->access_token) {
 
-        if ($this->session('access_token')) {
-            //Make a form
-            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-            $issue = new \stdClass();
-            $issue->title = 'testpp';
-            $labels = $this->apiRequest($labelsUrl, $issue);
+            $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+                . '/issues?state=open'
+            );
 
+            $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+                . '/issues?state=closed'
+            );
+
+            $this->response = array_reverse(array_merge($open, $closed));
+            echo '<h3>Logged In</h3>';
+            return $this->response;
         }
 
         if ($this->get('code')) {
-            // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
+            // When Github redirects the user back here.
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                die();
+                exit();
             }
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
@@ -70,12 +60,13 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
-                'User-Agent' => 'swordhunter' //Need this for v.3.
+                'User-Agent' => APP_NAME //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
-            die();
+            return 1;
         }
+
         if ($this->get('login')) {
             // Send the user to Github's authorization page
 
@@ -89,19 +80,18 @@ class gitHubController
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'state' => $this->session('state'),
-                'scope' => 'repo'
+                'scope' => 'repo',
+                'state' => $_SESSION['state']
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
             exit();
-        } else {
-            //All clauses have exit().
-            echo '<h3>Not logged in</h3>';
-            echo '<p><a href="?login=1">Log In</a></p>';
-            return false;
         }
 
+        //All clauses have exit().
+        echo '<h3>Not logged in</h3>';
+        echo '<p><a href="?login=1">Log In</a></p>';
+        return true;
     }
 
     /**

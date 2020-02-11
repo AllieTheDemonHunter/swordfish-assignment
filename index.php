@@ -4,29 +4,19 @@ namespace GitAllie;
 use gitHubController;
 
 session_start();
-
 include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
+$base = new Base($gitHub->response);
 
-print_r($gitHub);
-if($gitHub) {
-
-   /* $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-        . '/issues?state=open'
-    );
-
-    $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-        . '/issues?state=closed'
-    );
-
-    if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
-        $response = array_reverse(array_merge($closed, $open));
-        $base = new Base($response);
-    }*/
-}
-
+//Make a form
+$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+$newIssue = [
+    'title' => 'test-'];
+$issue = new \stdClass();
+$issue->title = 'testpp';
+$labels = $gitHub->apiRequest($labelsUrl, $issue);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,6 +25,10 @@ if($gitHub) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<?php
 
+print_r($labels);
+print $base;
+?>
 </body>
 </html>
