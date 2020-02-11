@@ -103,7 +103,7 @@ class gitHubController
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
         echo '<p><a href="?login=1">Log In</a></p>';
-        return true;
+        $this->debug($this);
     }
 
     /**
