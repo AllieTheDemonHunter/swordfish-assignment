@@ -75,6 +75,7 @@ class gitHubController
             if(is_object($token)) {
                 print_r($token);
             }
+            debug_print_backtrace();
             die();
             header('Location: ' . $this->base_url.'?token='.$token);
 
@@ -122,7 +123,9 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
-            print_r($this->access_token);
+            print_r($this);
+            debug_print_backtrace();
+                die(__LINE__);
             $headers[] = 'Authorization: token ' . $this->access_token;
         }
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
