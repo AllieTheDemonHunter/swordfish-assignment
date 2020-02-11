@@ -80,7 +80,7 @@ class gitHubController
 
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
-                header('Location: ' . $this->base_url);
+                header('Location: ' . $this->base_url.'#redirected-form-not-an-empty-token');
             } else {
                 $this->debug('Fail: No token received.');
             }
