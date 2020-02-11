@@ -53,7 +53,8 @@ class gitHubController
             $labels = $this->apiRequest($labelsUrl, $issue);
             print_r($labels);
             return true;
-        }elseif ($this->get('code')) {
+        }
+        if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
@@ -72,7 +73,8 @@ class gitHubController
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
             die();
-        }elseif ($this->get('login')) {
+        }
+        if ($this->get('login')) {
             // Send the user to Github's authorization page
 
             // Generate a random hash and store in the session for security
