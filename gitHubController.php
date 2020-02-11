@@ -81,6 +81,7 @@ class gitHubController
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url.'#redirected-form-not-an-empty-token');
+                exit();
             } else {
                 $this->debug('Fail: No token received.');
             }
@@ -101,14 +102,9 @@ class gitHubController
             return $this->response;
         }
 
-
-
-
-
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
         echo '<p><a href="?login=1">Log In</a></p>';
-        $this->debug($this);
     }
 
     /**
