@@ -33,21 +33,19 @@ if($gitHub) {
 </head>
 <body>
 <?php
+//Make a form
+$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+$newIssue = [
+    'title' => 'test-'];
+$issue = new \stdClass();
+$issue->title = 'testpp';
+$labels = $gitHub->apiRequest($labelsUrl, $issue);
+print_r($labels);
 
 if(isset($base)) {
     print $base;
 }
 
-if($gitHub) {
-    $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-    $newIssue = [
-        'title' => 'test-',
-        'body' => 'more',
-        'assignees' => ['AllieTheDemonHunter']
-    ];
-    $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
-    print_r($labels);
-}
 
 ?>
 </body>

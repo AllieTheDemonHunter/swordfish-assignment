@@ -106,16 +106,19 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        if ($post)
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
+        if ($post) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+        }
         $headers[] = 'Accept: application/json';
-        $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
-        if ($this->session('access_token'))
-            $headers[] = 'Authorization: Bearer ' . $this->session('access_token');
+        if ($this->access_token) {
+            $headers[] = 'Authorization: token ' . $this->access_token;
+        }
         $headers[] = 'User-Agent:' . APP_NAME;
+        $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $response = curl_exec($ch);
-        return json_decode($response);
+        $this->response = curl_exec($ch);
+
+        return json_decode($this->response);
     }
 }
 
