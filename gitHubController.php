@@ -70,8 +70,6 @@ class gitHubController
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
-            } else {
-                $this->debug($token);
             }
         }
 
@@ -132,7 +130,6 @@ class gitHubController
         $curl_info = curl_getinfo($ch,CURLINFO_HTTP_CODE);
         if(curl_getinfo($ch,CURLINFO_HTTP_CODE) === '404') {
             print '<h2>Oh 404</h2>';
-            print_r(headers_list());
         }
         $_SESSION['debug'] = curl_getinfo($ch);
 
