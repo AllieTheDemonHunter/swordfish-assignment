@@ -113,7 +113,6 @@ class gitHubController
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
         $headers[] = 'Accept: application/json';
-        print_r($this->session('access_token'));die();
         if ($this->session('access_token')) {
             $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
