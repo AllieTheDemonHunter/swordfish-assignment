@@ -66,7 +66,7 @@ class gitHubController
                 'state' => $this->get('state'),
                 'code' => $this->get('code'),
                 'scope' => 'repo',
-                'User-Agent' => 'AllieTheDemonHunter' //Need this for v.3.
+                'User-Agent' => 'swordhunter' //Need this for v.3.
             ));
 
             $_SESSION['access_token'] = $token;
