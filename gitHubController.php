@@ -59,6 +59,7 @@ class gitHubController
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
+                'scope' => 'repo',
                 'code' => $this->get('code')
             ));
             $_SESSION['access_token'] = $token;
@@ -108,7 +109,6 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
-            print_r($this);die();
             $headers[] = 'Authorization: token ' . $this->access_token;
         }
         $headers[] = 'User-Agent:' . APP_NAME_LOCAL;
