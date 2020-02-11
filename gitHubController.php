@@ -66,7 +66,7 @@ class gitHubController
                 'state' => $this->get('state'),
                 'code' => $this->get('code'),
                 'scope' => 'repo',
-                'User-Agent' => 'swordhunter' //Need this for v.3.
+                'User-Agent' => 'AllieTheDemonHunter' //Need this for v.3.
             ));
 
             $_SESSION['access_token'] = $token;
@@ -118,9 +118,9 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->session('access_token')->access_token) {
-            $headers[] = 'Authorization: access_token ' . $this->session('access_token')->access_token;
+            $headers[] = 'Authorization: token ' . $this->session('access_token')->access_token;
         }
-        $headers[] = 'User-Agent: swordhunter';
+        $headers[] = 'User-Agent: AllieTheDemonHunter';
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
