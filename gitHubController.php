@@ -65,8 +65,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $this->get('state'),
                 'code' => $this->get('code'),
-                'scope' => 'repo',
-                'User-Agent' => 'swordfish-assignment' //Need this for v.3.
+                'scope' => 'repo'
             ));
 
             $_SESSION['access_token'] = $token;
