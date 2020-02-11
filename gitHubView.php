@@ -75,6 +75,7 @@ class Base extends gitHubView
 
     public function __construct($incomingData)
     {
+        if(!empty($incomingData) && is_array($incomingData))
         foreach ($incomingData as $key => $issue) {
             $this->issues[] = new Issue($issue);
         }
