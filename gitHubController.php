@@ -59,8 +59,7 @@ class gitHubController
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
-                'code' => $this->get('code'),
-                'User-Agent' => APP_NAME //Need this for v.3.
+                'code' => $this->get('code')
             ));
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
@@ -112,7 +111,7 @@ class gitHubController
             print_r($this);die();
             $headers[] = 'Authorization: token ' . $this->access_token;
         }
-        $headers[] = 'User-Agent:' . APP_NAME;
+        $headers[] = 'User-Agent:' . APP_NAME_LOCAL;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
