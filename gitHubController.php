@@ -65,6 +65,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
+                'scope' => 'repo',
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token;
