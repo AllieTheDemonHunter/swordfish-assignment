@@ -145,6 +145,9 @@ trait gitHubTrait
     }
 
     function debug($any = ['nothing']) {
+        if(empty($any)) {
+            $any = 'blank';
+        }
         print '<pre>';
         debug_print_backtrace();
         die('Variable:'.print_r($any,1).'Session:'.print_r($_SESSION,1).'</pre>');
