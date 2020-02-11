@@ -57,15 +57,16 @@ class gitHubController
                 exit('Verify the state matches our stored state === FALSE');
             }
             // Exchange the auth code for a token
-            $token = $this->apiRequest(TOKEN_URL, array(
+            $post_for_auth = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'scope' => 'repo',
                 'code' => $this->get('code'),
-            ));
-            $this->debug($token);
+            );
+            $this->debug($post_for_auth);
+            $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
             header('Location: ' . $this->base_url.'?token='.$token);
 
         }
