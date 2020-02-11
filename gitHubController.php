@@ -62,7 +62,6 @@ class gitHubController
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
-                'scope' => 'repo',
                 'code' => $this->get('code'),
             );
 
@@ -112,7 +111,7 @@ class gitHubController
         if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
-        $this->debug($post);
+
         $headers[] = 'Accept: application/vnd.github.v3+json';
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
