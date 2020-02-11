@@ -70,6 +70,8 @@ class gitHubController
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
+            } else {
+                print 'fail';
             }
         }
 
