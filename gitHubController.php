@@ -71,7 +71,7 @@ class gitHubController
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
             } else {
-                print 'fail';
+                print 'Fail: No token received.';
             }
         }
 
@@ -115,7 +115,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_VERBOSE, 1);
         curl_setopt($ch, CURLOPT_HEADER, 1);
         if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         }
 
         if ($this->session('access_token')) {
