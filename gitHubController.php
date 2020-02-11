@@ -92,6 +92,8 @@ class gitHubController
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
             exit();
         } else {
+            print_r($_REQUEST);
+            print_r($_SESSION);
             //All clauses have exit().
             echo '<h3>Not logged in</h3>';
             echo '<p><a href="?login=1">Log In</a></p>';
