@@ -66,7 +66,7 @@ class gitHubController
             );
 
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
-            $this->debug($post_for_auth);
+            $this->debug($token);
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
