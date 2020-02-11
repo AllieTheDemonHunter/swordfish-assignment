@@ -109,6 +109,7 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
+            print_r($this->access_token);
             $headers[] = 'Authorization: token ' . $this->access_token;
         }
         $headers[] = 'User-Agent:' . APP_NAME_LOCAL;
