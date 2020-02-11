@@ -7,7 +7,7 @@ define('GITHUB_ACCOUNT', 'SwordfishCode');*/
 
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-define('APP_NAME', 'swordfish');
+define('APP_NAME', 'swordhunter');
 define('REPO', 'swordfish-assignment');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 
