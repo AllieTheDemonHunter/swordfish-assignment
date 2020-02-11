@@ -52,6 +52,7 @@ class gitHubController
             $issue->title = 'testpp';
             $labels = $this->apiRequest($labelsUrl, $issue);
             print_r($labels);
+            return true;
         }
         if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
