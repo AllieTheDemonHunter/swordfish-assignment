@@ -82,7 +82,6 @@ class gitHubController
                 $_SESSION['access_token'] = $token;
                 return 1;
             } else {
-                $this->debug($post_for_auth);
                 header('Location: ' . $this->base_url.'#redirected-form-not-an-empty-token');
             }
         }
