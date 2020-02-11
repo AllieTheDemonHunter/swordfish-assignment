@@ -35,19 +35,27 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . OAUTH_APP_NAME;
 
-        if ($this->session('access_token')) {
+        if ($this->get('login')) {
+            // Send the user to Github's authorization page
 
-            $open = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
-                . '/issues?state=open'
+            // Generate a random hash and store in the session for security
+            $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
+
+            // Freshen up
+            unset($_SESSION['access_token']);
+
+            // Sending this to get logged in.
+            $params = array(
+                'client_id' => OAUTH2_CLIENT_ID,
+                'redirect_uri' => $this->base_url,
+                'login' => GITHUB_ACCOUNT,
+                'state' => $this->get('state'),
+                'scope' => 'repo'
             );
 
-            $closed = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
-                . '/issues?state=closed'
-            );
-
-            $this->response = array_reverse(array_merge($open, $closed));
-            echo '<h3>Logged In</h3>';
-            return $this->response;
+            // Redirect the user to Github's authorization page
+            header('Location: ' . AUTH_URL . '?' . http_build_query($params));
+            exit();
         }
 
         if ($this->get('code')) {
@@ -74,31 +82,28 @@ class gitHubController
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
             } else {
-                print 'Fail: No token received.';
+                $this->debug('Fail: No token received.');
             }
         }
 
-        if ($this->get('login')) {
-            // Send the user to Github's authorization page
+        if ($this->session('access_token')) {
 
-            // Generate a random hash and store in the session for security
-            $_SESSION['state'] = hash('sha256', microtime(TRUE) . rand() . $_SERVER['REMOTE_ADDR']);
-
-            // Freshen up
-            unset($_SESSION['access_token']);
-
-            // Sending this to get logged in.
-            $params = array(
-                'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => $this->base_url,
-                'login' => GITHUB_ACCOUNT,
-                'state' => $this->get('state'),
-                'scope' => 'repo'
+            $open = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
+                . '/issues?state=open'
             );
 
-            // Redirect the user to Github's authorization page
-            header('Location: ' . AUTH_URL . '?' . http_build_query($params));
+            $closed = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
+                . '/issues?state=closed'
+            );
+
+            $this->response = array_reverse(array_merge($open, $closed));
+            echo '<h3>Logged In</h3>';
+            return $this->response;
         }
+
+
+
+
 
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
