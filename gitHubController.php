@@ -52,11 +52,14 @@ class gitHubController
         if ($this->get('code')) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
-            print_r($_SESSION);die();
+
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
                 exit();
             }
+
+            print_r($_SESSION);print_r($_GET);die();
+
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
                 'client_id' => OAUTH2_CLIENT_ID,
