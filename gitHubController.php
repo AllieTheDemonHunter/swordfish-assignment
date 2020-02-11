@@ -46,7 +46,6 @@ class gitHubController
     {
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
-        $this->access_token = $this->session('access_token')->access_token;
         if ($this->session('access_token')) {
             return $this;
         }
@@ -67,7 +66,7 @@ class gitHubController
                 'scope' => 'repo',
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
-            print_r($token);
+
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
             exit();
@@ -86,7 +85,8 @@ class gitHubController
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'state' => $_SESSION['state']
+                'state' => $this->session('state'),
+                'scope' => 'user'
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
