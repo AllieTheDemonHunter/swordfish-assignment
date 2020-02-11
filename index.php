@@ -24,8 +24,6 @@ if($gitHub) {
     }
 }
 
-print_r($gitHub);
-print_r($_REQUEST);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
