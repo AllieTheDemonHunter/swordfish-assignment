@@ -41,9 +41,12 @@ if(isset($base)) {
 if($gitHub) {
     //Make a form
     $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-    $issue = new \stdClass();
-    $issue->title = 'testpp';
-    $labels = $gitHub->apiRequest($labelsUrl, ['title'=>'test']);
+    $newIssue = [
+        'title' => 'test-',
+        'body' => 'more',
+        'assignees' => 'AllieTheDemonHunter'
+    ];
+    $labels = $gitHub->apiRequest($labelsUrl, $newIssue);
     print_r($labels);
 }
 
