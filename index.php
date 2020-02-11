@@ -4,7 +4,8 @@ namespace GitAllie;
 use gitHubController;
 
 session_start();
-
+include_once 'gitHubController.php';
+include_once 'gitHubView.php';
 
 /*//Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
@@ -23,8 +24,7 @@ $labels = $gitHub->apiRequest($labelsUrl, $issue);*/
 <body>
 <pre>
 <?php
-include_once 'gitHubController.php';
-include_once 'gitHubView.php';
+
 $gitHub = new gitHubController();
 $base = new Base($gitHub->response);
 print $base;
