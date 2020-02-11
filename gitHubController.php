@@ -68,7 +68,7 @@ class gitHubController
             ));
 
             $_SESSION['access_token'] = $token;
-            print_r($_SESSION);die();
+
             header('Location: ' . $this->base_url);
             exit();
         }
@@ -110,6 +110,7 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        print_r($_SESSION);die();
         if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
