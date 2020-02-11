@@ -65,7 +65,7 @@ class gitHubController
                 'scope' => 'repo',
                 'code' => $this->get('code'),
             ));
-            $this->die($token);
+            $this->debug($token);
             header('Location: ' . $this->base_url.'?token='.$token);
 
         }
