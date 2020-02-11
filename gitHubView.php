@@ -70,10 +70,14 @@ class When extends \DateTime
 
 class Base extends gitHubView
 {
+    use \gitHubTrait;
     public $issues;
 
     public function __construct($incomingData)
     {
+        if(empty($incomingData)) {
+            $this->debug();
+        }
         foreach ($incomingData as $key => $issue) {
             $this->issues[] = new Issue($issue);
         }
