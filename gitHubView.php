@@ -81,6 +81,7 @@ class Base extends gitHubView
             }
         } else {
             print 'No incomingData';
+            $this->debug($_REQUEST);
         }
     }
 }
