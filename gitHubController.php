@@ -47,6 +47,15 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
 
+        if ($this->session('access_token')) {
+            //Make a form
+            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+            $issue = new \stdClass();
+            $issue->title = 'testpp';
+            $labels = $this->apiRequest($labelsUrl, $issue);
+
+        }
+
         if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
@@ -61,7 +70,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
-                'User-Agent' => APP_NAME //Need this for v.3.
+                'User-Agent' => 'swordhunter' //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
@@ -86,27 +95,13 @@ class gitHubController
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
             exit();
-        }
-
-        if ($this->session('access_token')) {
-            //Make a form
-            
-                        print_r($_REQUEST);
-                        print_r($_SESSION);
-                        return true;
-            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-            $issue = new \stdClass();
-            $issue->title = 'testpp';
-            $labels = $this->apiRequest($labelsUrl, $issue);
-
         } else {
-            print_r($_REQUEST);
-            print_r($_SESSION);
             //All clauses have exit().
             echo '<h3>Not logged in</h3>';
             echo '<p><a href="?login=1">Log In</a></p>';
             return false;
         }
+
     }
 
     /**
