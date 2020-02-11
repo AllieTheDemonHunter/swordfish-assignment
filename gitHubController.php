@@ -67,16 +67,7 @@ class gitHubController
                 'scope' => 'repo',
                 'code' => $this->get('code'),
             ));
-            if(is_string($token)) {
-                $_SESSION['access_token'] = $token;
-                header('Location: ' . $this->base_url.'?token='.$token);
-            }
-
-            if(is_object($token)) {
-                print_r($token);
-            }
-            debug_print_backtrace();
-            die();
+            $this->die($token);
             header('Location: ' . $this->base_url.'?token='.$token);
 
         }
@@ -123,10 +114,7 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->access_token) {
-            print_r($this);
-            debug_print_backtrace();
-                die(__LINE__);
-            $headers[] = 'Authorization: token ' . $this->access_token;
+            $this->debug($this);
         }
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
@@ -154,6 +142,10 @@ trait gitHubTrait
         }
 
         return false;
+    }
+
+    function debug($any = []) {
+        die('<pre>Variable:\n\n'.print_r($any,1).debug_print_backtrace().'\n\n\Session:\n\n\\'.print_r($_SESSION,1).'</pre>');
     }
 
     /**
