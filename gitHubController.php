@@ -65,7 +65,7 @@ class gitHubController
                 'scope' => 'repo',
                 'code' => $this->get('code'),
             );
-            $this->debug($post_for_auth);
+
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
             header('Location: ' . $this->base_url.'?token='.$token);
 
@@ -111,10 +111,8 @@ class gitHubController
         if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
+        $this->debug($post);
         $headers[] = 'Accept: application/json';
-        if ($this->access_token) {
-            $this->debug($this);
-        }
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -145,6 +143,7 @@ trait gitHubTrait
 
     function debug($any = []) {
         debug_print_backtrace();
+        var_dump($_SERVER);
         die('Variable:'.print_r($any,1).'Session:'.print_r($_SESSION,1));
     }
 
