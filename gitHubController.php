@@ -1,10 +1,11 @@
 <?php
-define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
+define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
+define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
 
-define('APP_NAME', 'swordfish-assignment');
+define('APP_NAME', 'GitIntegration');
 define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+define('REPO_NAME', 'GitIntegration');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
@@ -36,11 +37,11 @@ class gitHubController
 
         if ($this->session('access_token')) {
 
-            $open = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+            $open = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
                 . '/issues?state=open'
             );
 
-            $closed = $this->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+            $closed = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
                 . '/issues?state=closed'
             );
 
@@ -57,6 +58,7 @@ class gitHubController
                 header('Location: ' . $this->base_url);
                 exit('Verify the state matches our stored state === FALSE');
             }
+
             // Exchange the auth code for a token
             $post_for_auth = array(
                 'client_id' => OAUTH2_CLIENT_ID,
@@ -93,6 +95,7 @@ class gitHubController
                 'state' => $this->get('state'),
                 'scope' => 'repo'
             );
+
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
         }
