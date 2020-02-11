@@ -1,6 +1,7 @@
 <?php
-define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
-define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
+define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
+define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
+
 define('APP_NAME', 'swordfish-assignment');
 define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
