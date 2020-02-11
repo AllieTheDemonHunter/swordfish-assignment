@@ -4,19 +4,15 @@ namespace GitAllie;
 use gitHubController;
 
 session_start();
-include_once 'gitHubController.php';
-include_once 'gitHubView.php';
 
-$gitHub = new gitHubController();
-$base = new Base($gitHub->response);
 
-//Make a form
+/*//Make a form
 $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
 $newIssue = [
     'title' => 'test-'];
 $issue = new \stdClass();
 $issue->title = 'testpp';
-$labels = $gitHub->apiRequest($labelsUrl, $issue);
+$labels = $gitHub->apiRequest($labelsUrl, $issue);*/
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,10 +21,13 @@ $labels = $gitHub->apiRequest($labelsUrl, $issue);
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<pre>
 <?php
-
-print_r($labels);
+include_once 'gitHubController.php';
+include_once 'gitHubView.php';
+$gitHub = new gitHubController();
+$base = new Base($gitHub->response);
 print $base;
-?>
+?></pre>
 </body>
 </html>

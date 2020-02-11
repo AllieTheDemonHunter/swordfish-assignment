@@ -143,7 +143,7 @@ trait gitHubTrait
     }
 
     function debug($any = []) {
-        die('<pre>Variable:\n\n'.print_r($any,1).debug_print_backtrace().'\n\n\Session:\n\n\\'.print_r($_SESSION,1).'</pre>');
+        die('Variable:\n\n'.print_r($any,1).debug_print_backtrace().'\n\n\Session:\n\n\\'.print_r($_SESSION,1));
     }
 
     /**
