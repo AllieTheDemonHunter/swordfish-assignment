@@ -46,7 +46,12 @@ class gitHubController
         //Making life easier.
         $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
         if ($this->session('access_token')) {
-            return $this;
+            //Make a form
+            $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+            $issue = new \stdClass();
+            $issue->title = 'testpp';
+            $labels = $this->apiRequest($labelsUrl, $issue);
+            print_r($labels);
         }
         if ($this->get('code')) {
             // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string

@@ -13,13 +13,6 @@ $gitHub = new gitHubController();
 
 if($gitHub) {
 
-    //Make a form
-    $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-    $issue = new \stdClass();
-    $issue->title = 'testpp';
-    $labels = $gitHub->apiRequest($labelsUrl, $issue);
-    print_r($labels);
-
     $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
         . '/issues?state=open'
     );
