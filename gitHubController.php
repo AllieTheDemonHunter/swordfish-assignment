@@ -63,6 +63,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $this->get('state'),
                 'code' => $this->get('code'),
+                'scope' => 'repo'
             );
 
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
@@ -89,7 +90,6 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => $this->base_url,
                 'login' => GITHUB_ACCOUNT,
-                'scope' => 'repo',
                 'state' => $this->session('state')
             );
             // Redirect the user to Github's authorization page
