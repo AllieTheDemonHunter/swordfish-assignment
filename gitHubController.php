@@ -61,11 +61,18 @@ class gitHubController
                 'state' => $_SESSION['state'],
                 'scope' => 'repo',
                 'code' => $this->get('code'),
-                'User-Agent' => APP_NAME //Need this for v.3.
             ));
-            $_SESSION['access_token'] = $token;
-            header('Location: ' . $this->base_url.'?token='.$token);
+            if(is_string($token)) {
+                $_SESSION['access_token'] = $token;
+                header('Location: ' . $this->base_url.'?token='.$token);
+            }
+
+            if(is_object($token)) {
+                print_r($token);
+            }
             die();
+            header('Location: ' . $this->base_url.'?token='.$token);
+
         }
 
         if ($this->get('login')) {
