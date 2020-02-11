@@ -53,7 +53,7 @@ class gitHubController
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                exit('Left at:'.__LINE__); // I don't like die().
+                die();
             }
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
@@ -66,7 +66,7 @@ class gitHubController
             ));
             $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
-            exit('Left at:'.__LINE__); // I don't like die().
+            die();
         }
 
         if ($this->get('login')) {
@@ -93,7 +93,7 @@ class gitHubController
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
         echo '<p><a href="?login=1">Log In</a></p>';
-        return true;
+        return false;
     }
 
     /**
