@@ -111,7 +111,9 @@ class gitHubController
     function apiRequest($url, $post = FALSE, $headers = array())
     {
         $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
         if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
@@ -127,8 +129,8 @@ class gitHubController
         /**
          * Some error handling
          */
-        $curl_info = curl_getinfo($ch);
-        if(http_response_code() === 404) {
+        $curl_info = curl_getinfo($ch,CURLINFO_HTTP_CODE);
+        if(curl_getinfo($ch,CURLINFO_HTTP_CODE) === '404') {
             print '<h2>Oh 404</h2>';
             print_r(headers_list());
         }
