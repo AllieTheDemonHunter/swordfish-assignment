@@ -68,6 +68,7 @@ class gitHubController
                 'scope' => 'repo',
                 'User-Agent' => APP_NAME //Need this for v.3.
             ));
+            print_r($token);
             $_SESSION['access_token'] = $token;
             header('Location: ' . $this->base_url);
             exit();
