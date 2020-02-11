@@ -70,7 +70,7 @@ class gitHubController
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
             } else {
-                $this->debug($token);
+                $this->debug($post_for_auth);
             }
 
         }
