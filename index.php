@@ -9,19 +9,21 @@ include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
+if($gitHub) {
+    $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+        . '/issues?state=open'
+    );
 
-$open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-    . '/issues?state=open'
-);
+    $closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
+        . '/issues?state=closed'
+    );
 
-$closed = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
-    . '/issues?state=closed'
-);
-
-if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
-    $response = array_reverse(array_merge($closed, $open));
-    $base = new Base($response);
+    if(is_array($open) && !empty($open) && is_array($closed) && !empty($closed)) {
+        $response = array_reverse(array_merge($closed, $open));
+        $base = new Base($response);
+    }
 }
+
 print_r($gitHub);
 print_r($_REQUEST);
 ?><!DOCTYPE html>
@@ -37,12 +39,15 @@ print_r($_REQUEST);
 if(isset($base)) {
     print $base;
 }
-//Make a form
-$labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
-$issue = new \stdClass();
-$issue->title = 'testpp';
-$labels = $gitHub->apiRequest($labelsUrl, $issue);
-print_r($labels);
+
+if($gitHub) {
+    //Make a form
+    $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
+    $issue = new \stdClass();
+    $issue->title = 'testpp';
+    $labels = $gitHub->apiRequest($labelsUrl, $issue);
+    print_r($labels);
+}
 
 ?>
 </body>

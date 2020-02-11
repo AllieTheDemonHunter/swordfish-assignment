@@ -115,7 +115,7 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         if ($this->session('access_token')) {
             print_r($_SESSION);
-            $headers[] = 'Authorization: Bearer ' . $this->session('access_token');
+            $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
         $headers[] = 'User-Agent:' . APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
