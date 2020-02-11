@@ -119,6 +119,9 @@ class gitHubController
         $headers[] = 'Accept: application/json';
         if ($this->session('access_token')->access_token) {
             $headers[] = 'Authorization: token ' . $this->session('access_token')->access_token;
+        } else {
+            print_r($_REQUEST);
+            print_r($_SESSION);
         }
         $headers[] = 'User-Agent: AllieTheDemonHunter';
         $headers[] = 'application/vnd.github.machine-man-preview+json';
