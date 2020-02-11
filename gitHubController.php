@@ -95,6 +95,8 @@ class gitHubController
             $issue->title = 'testpp';
             $labels = $this->apiRequest($labelsUrl, $issue);
             print_r($labels);
+            print_r($_REQUEST);
+            print_r($_SESSION);
             return true;
         } else {
             print_r($_REQUEST);
