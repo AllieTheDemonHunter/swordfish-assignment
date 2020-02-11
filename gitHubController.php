@@ -2,7 +2,7 @@
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('APP_NAME', 'swordfish-assignment');
-define('APP_NAME_LOCAL', 'swordhunter');
+define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
@@ -29,7 +29,7 @@ class gitHubController
     function __construct()
     {
         //Making life easier.
-        $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . APP_NAME_LOCAL;
+        $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . OAUTH_APP_NAME;
         $this->access_token = $this->session('access_token');
         if ($this->access_token) {
 
@@ -51,7 +51,7 @@ class gitHubController
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                exit();
+                exit('Verify the state matches our stored state === FALSE');
             }
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
@@ -60,11 +60,12 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'state' => $_SESSION['state'],
                 'scope' => 'repo',
-                'code' => $this->get('code')
+                'code' => $this->get('code'),
+                'User-Agent' => APP_NAME //Need this for v.3.
             ));
             $_SESSION['access_token'] = $token;
-            header('Location: ' . $this->base_url);
-            return 1;
+            header('Location: ' . $this->base_url.'?token='.$token);
+            die();
         }
 
         if ($this->get('login')) {
@@ -79,7 +80,7 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => 'https://allie.co.za/swordhunter/',
+                'redirect_uri' => $this->base_url,
                 'scope' => 'repo',
                 'state' => $_SESSION['state']
             );
@@ -112,7 +113,7 @@ class gitHubController
             print_r($this->access_token);
             $headers[] = 'Authorization: token ' . $this->access_token;
         }
-        $headers[] = 'User-Agent:' . APP_NAME_LOCAL;
+        $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
