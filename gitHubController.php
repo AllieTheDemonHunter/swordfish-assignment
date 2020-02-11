@@ -52,6 +52,7 @@ class gitHubController
         if ($this->get('code')) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
+            print_r($_SESSION);die();
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
                 exit();
@@ -110,7 +111,7 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        print_r($_SESSION);die();
+
         if ($post) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
