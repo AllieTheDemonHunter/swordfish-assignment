@@ -10,7 +10,7 @@ define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 error_reporting(E_ALL);
-ini_set('display_errors', 'yes');
+ini_set('display_errors', 1);
 
 
 /**
@@ -66,10 +66,12 @@ class gitHubController
             );
 
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
-            $this->debug($token);
+
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
+            } else {
+                $this->debug($token);
             }
         }
 
