@@ -69,10 +69,7 @@ class gitHubController
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 header('Location: ' . $this->base_url);
-            } else {
-                $this->debug($post_for_auth);
             }
-
         }
 
         if ($this->get('login')) {
@@ -121,6 +118,7 @@ class gitHubController
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $this->debug($post);
         $this->response = curl_exec($ch);
 
         return json_decode($this->response);
