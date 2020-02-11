@@ -68,6 +68,7 @@ class gitHubController
             ));
 
             $_SESSION['access_token'] = $token;
+            print_r($_SESSION);die();
             header('Location: ' . $this->base_url);
             exit();
         }
