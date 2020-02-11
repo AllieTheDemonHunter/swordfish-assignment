@@ -43,7 +43,7 @@ if($gitHub) {
     $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
     $issue = new \stdClass();
     $issue->title = 'testpp';
-    $labels = $gitHub->apiRequest($labelsUrl, $issue);
+    $labels = $gitHub->apiRequest($labelsUrl, ['title'=>'test']);
     print_r($labels);
 }
 
