@@ -119,7 +119,7 @@ class gitHubController
         if ($this->session('access_token')->access_token) {
             $headers[] = 'Authorization: token ' . $this->session('access_token')->access_token;
         }
-        $headers[] = 'User-Agent: AllieTheDemonHunter';
+        $headers[] = 'User-Agent: swordfish';
         $headers[] = 'application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
