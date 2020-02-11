@@ -10,7 +10,7 @@ include_once 'gitHubView.php';
 
 $gitHub = new gitHubController();
 
-
+print_r($gitHub);
 if($gitHub) {
 
    /* $open = $gitHub->apiRequest(API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME
@@ -35,13 +35,6 @@ if($gitHub) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<?php
 
-if(isset($base)) {
-    print $base;
-}
-
-
-?>
 </body>
 </html>
