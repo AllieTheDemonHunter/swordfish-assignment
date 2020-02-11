@@ -8,7 +8,6 @@ define('GITHUB_ACCOUNT', 'SwordfishCode');*/
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('APP_NAME', 'swordfish-assignment');
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 
 
 define('APP_NAME_LOCAL', 'swordhunter');
@@ -50,28 +49,24 @@ class gitHubController
             return $this;
         }
         if ($this->get('code')) {
-            // When Github redirects the user back here.
+            // When Github redirects the user back here, there will be a "code" and "state" parameter in the query string
             // Verify the state matches our stored state
-
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 header('Location: ' . $this->base_url);
-                exit();
+                exit('Left at:'.__LINE__); // I don't like die().
             }
-
             // Exchange the auth code for a token
             $token = $this->apiRequest(TOKEN_URL, array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
-                'state' => $this->get('state'),
+                'state' => $_SESSION['state'],
                 'code' => $this->get('code'),
-                'scope' => 'repo'
+                'User-Agent' => APP_NAME //Need this for v.3.
             ));
-
-            $_SESSION['access_token'] = $token;
-            print_r($_SESSION);die();
+            $_SESSION['access_token'] = $token->access_token;
             header('Location: ' . $this->base_url);
-            exit();
+            exit('Left at:'.__LINE__); // I don't like die().
         }
 
         if ($this->get('login')) {
@@ -111,21 +106,16 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-        if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
-        }
+        if ($post)
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post));
         $headers[] = 'Accept: application/json';
-        if ($this->session('access_token')->access_token) {
-            $headers[] = 'Authorization: token ' . $this->session('access_token')->access_token;
-        }
-        $headers[] = 'User-Agent: swordfish';
-        $headers[] = 'application/vnd.github.machine-man-preview+json';
+        $headers[] = 'Accept: application/vnd.github.machine-man-preview'; //Nice to have
+        if ($this->session('access_token'))
+            $headers[] = 'Authorization: Bearer ' . $this->session('access_token');
+        $headers[] = 'User-Agent:' . APP_NAME;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $this->response = curl_exec($ch);
-        $this->curl_info = curl_getinfo($ch);
-
-        return json_decode($this->response);
+        $response = curl_exec($ch);
+        return json_decode($response);
     }
 }
 
