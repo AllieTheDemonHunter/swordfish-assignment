@@ -89,7 +89,7 @@ class gitHubController
                 'redirect_uri' => $this->base_url,
                 'login' => GITHUB_ACCOUNT,
                 'scope' => 'repo',
-                'state' => $_SESSION['state']
+                'state' => $this->session('state')
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
@@ -115,7 +115,11 @@ class gitHubController
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
-        $headers[] = 'Accept: application/vnd.github.v3+json';
+        if ($this->access_token) {
+            print_r($this->access_token);
+            $headers[] = 'Authorization: token ' . $this->access_token;
+        }
+
         $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
         $headers[] = 'Accept: application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
