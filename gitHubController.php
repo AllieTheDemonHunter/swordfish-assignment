@@ -47,7 +47,7 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => $this->base_url,
+                'redirect_uri' => 'http://localhost:8080/receiving',
                 'login' => GITHUB_ACCOUNT,
                 'state' => $_state,
                 'scope' => 'repo'
@@ -71,7 +71,7 @@ class gitHubController
             $post_for_auth = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
-                'redirect_uri' => $this->base_url,
+                'redirect_uri' => 'http://localhost:8080/receiving',
                 'state' => $this->get('state'),
                 'code' => $this->get('code')
             );
