@@ -124,7 +124,7 @@ class gitHubController
         $headers[] = 'Accept: application/vnd.github.machine-man-preview+json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
-
+        $_SESSION['debug'] = curl_getinfo($ch);
         return json_decode($this->response);
     }
 }
