@@ -113,8 +113,8 @@ class gitHubController
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
         $headers[] = 'Accept: application/json';
-        if ($this->access_token) {
-            $headers[] = 'Authorization: token ' . $this->access_token;
+        if ($this->session('access_token')) {
+            $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
         $headers[] = 'User-Agent:' . APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
