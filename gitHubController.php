@@ -62,7 +62,7 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'redirect_uri' => $this->base_url,
-                'state' => $_SESSION['state'],
+                'state' => $this->get('state'),
                 'code' => $this->get('code'),
             );
 
