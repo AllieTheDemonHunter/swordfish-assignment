@@ -38,7 +38,7 @@ if(isset($base)) {
     print $base;
 }
 
-if($gitHub) {
+if(false) {
     //Make a form
     $labelsUrl = API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . APP_NAME . '/issues';
     $issue = new \stdClass();
