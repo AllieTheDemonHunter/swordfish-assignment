@@ -92,7 +92,6 @@ class gitHubController
             );
             // Redirect the user to Github's authorization page
             header('Location: ' . AUTH_URL . '?' . http_build_query($params));
-            exit();
         }
 
         //All clauses have exit().
