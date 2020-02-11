@@ -53,7 +53,8 @@ class gitHubController
             // When Github redirects the user back here.
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
-                header('Location: ' . $this->base_url);
+                unset($_SESSION['state']);
+                //header('Location: ' . $this->base_url);
                 exit('Verify the state matches our stored state === FALSE');
             }
             // Exchange the auth code for a token
