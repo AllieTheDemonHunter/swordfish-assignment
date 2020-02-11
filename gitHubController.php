@@ -63,7 +63,7 @@ class gitHubController
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 unset($_SESSION['state']);
-                header('Location: ' . $this->base_url);
+                //header('Location: ' . $this->base_url);
                 exit('Verify the state matches our stored state === FALSE');
             }
 
