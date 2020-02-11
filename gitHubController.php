@@ -87,7 +87,6 @@ class gitHubController
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'redirect_uri' => 'https://allie.co.za/swordhunter/',
-                'scope' => 'repo',
                 'state' => $_SESSION['state']
             );
             // Redirect the user to Github's authorization page
@@ -116,8 +115,7 @@ class gitHubController
         }
         $headers[] = 'Accept: application/json';
         if ($this->session('access_token')) {
-            print_r($_SESSION);
-            $headers[] = 'Authorization: access_token ' . $this->session('access_token');
+            $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
         $headers[] = 'User-Agent:' . APP_NAME;
         $headers[] = 'application/vnd.github.machine-man-preview+json';
