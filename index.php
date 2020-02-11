@@ -7,7 +7,7 @@ session_start();
 include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 $gitHub = new gitHubController();
-$base = new Base($gitHub->response);
+
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +18,7 @@ $base = new Base($gitHub->response);
 <body>
 <pre>
 <?php
+$base = new Base($gitHub->response);
 print $base;
 ?></pre>
 </body>
