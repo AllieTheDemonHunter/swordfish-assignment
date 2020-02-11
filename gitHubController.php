@@ -11,9 +11,7 @@ define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 error_reporting(E_ALL);
 ini_set('display_errors', 'yes');
-if(function_exists('get_call_stack')) {
-    print_r(get_call_stack());
-}
+
 
 /**
  * Class gitHub
