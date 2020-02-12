@@ -6,7 +6,7 @@ define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('REPO_NAME', 'swordfish-assignment');
 define('DOMAIN', 'allie.co.za');
-define('PROTOCOL', 'http'); //Enforcing this, sorry, not sorry.
+define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
