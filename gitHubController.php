@@ -2,15 +2,18 @@
 define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
 define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 
-define('APP_NAME', 'GitIntegration');
 define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
-define('REPO_NAME', 'GitIntegration');
+define('REPO_NAME', 'swordfish-assignment');
 define('DOMAIN', 'localhost:8080');
 define('PROTOCOL', 'http'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
+define('BASE_URL', PROTOCOL . '://' . DOMAIN . '/receiving/index.php');
+
+define('ENDPOINT', API_URL . '/repos/'.GITHUB_ACCOUNT.'/'.REPO_NAME.'/issues');
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -24,17 +27,15 @@ class gitHubController
     /**
      * @var string
      */
-    public $base_url;
+
     public $response;
+    private $access_token = '71677a6f8879860d33e7a60079839586afc4eedd';
 
     /**
      * gitHub constructor.
      */
     function __construct()
     {
-        //Making life easier.
-        $this->base_url = PROTOCOL . '://' . DOMAIN . '/' . OAUTH_APP_NAME;
-
         if ($this->get('login')) {
             // Send the user to Github's authorization page
 
@@ -47,8 +48,8 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => $this->base_url,
-                'login' => GITHUB_ACCOUNT,
+                'redirect_uri' => BASE_URL,
+                'login' => 'AllieTheDemonHunter', //personal convenience
                 'state' => $_state,
                 'scope' => 'repo'
             );
@@ -71,13 +72,13 @@ class gitHubController
             $post_for_auth = array(
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
-                'redirect_uri' => 'http://localhost:8080/receiving/',
+                'code' => $this->get('code'),
+                'redirect_uri' => BASE_URL,
                 'state' => $this->get('state'),
-                'code' => $this->get('code')
             );
 
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
-            $_SESSION['access_token'] = $token;
+
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
                 return 1;
@@ -86,15 +87,14 @@ class gitHubController
             }
         }
 
-        if ($this->session('access_token')) {
+        if ($this->session('access_token') !== null) {
+            $new = new stdClass();
+            $new->title = 'test--o'.time();
+            $create_issue = $this->apiRequest(ENDPOINT, $new);
 
-            $open = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
-                . '/issues?state=open'
-            );
+            $open = $this->apiRequest(ENDPOINT.'?state=open');
 
-            $closed = $this->apiRequest(API_URL . '/repos/' . REPO_NAME . '/' . APP_NAME
-                . '/issues?state=closed'
-            );
+            $closed = $this->apiRequest(ENDPOINT.'?state=open');
 
             $this->response = array_reverse(array_merge($open, $closed));
             echo '<h3>Logged In</h3>';
@@ -117,27 +117,20 @@ class gitHubController
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_VERBOSE, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 1);
         if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
-        if ($this->session('access_token')) {
+        $_token = $this->session('access_token');
+        if (isset($_token) && is_string($this->session('access_token') )) {
             $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
 
-        $headers[] = 'User-Agent:' . OAUTH_APP_NAME;
+        $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
         $headers[] = 'Accept: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
-        /**
-         * Some error handling
-         */
-        $curl_info = curl_getinfo($ch,CURLINFO_HTTP_CODE);
-        if(curl_getinfo($ch,CURLINFO_HTTP_CODE) === '404') {
-            print '<h2>Oh 404</h2>';
-        }
+
         $_SESSION['debug'] = curl_getinfo($ch);
 
         return json_decode($this->response);
