@@ -5,7 +5,7 @@ define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
 define('OAUTH_APP_NAME', 'swordhunter');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('REPO_NAME', 'swordfish-assignment');
-define('DOMAIN', 'localhost:8080');
+define('DOMAIN', 'allie.co.za');
 define('PROTOCOL', 'http'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
