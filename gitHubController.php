@@ -48,7 +48,6 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'redirect_uri' => BASE_URL,
                 'login' => 'AllieTheDemonHunter', //personal convenience
                 'state' => $_state,
                 'scope' => 'repo'
@@ -73,7 +72,6 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'client_secret' => OAUTH2_CLIENT_SECRET,
                 'code' => $this->get('code'),
-                'redirect_uri' => BASE_URL,
                 'state' => $this->get('state'),
             );
 
