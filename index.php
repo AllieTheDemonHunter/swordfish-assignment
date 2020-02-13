@@ -39,7 +39,7 @@ if(get('code')) {
     $token = apiRequest($tokenURL, array(
         'client_id' => OAUTH2_CLIENT_ID,
         'client_secret' => OAUTH2_CLIENT_SECRET,
-        'redirect_uri' => 'https://allie.co.za/swordhunter/',
+        'redirect_uri' => 'swordhunter',
         'state' => $_SESSION['state'],
         'User-Agent' => APP_NAME,
         'code' => get('code')
