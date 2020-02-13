@@ -39,7 +39,6 @@ if(get('code')) {
     $token = apiRequest($tokenURL, array(
         'client_id' => OAUTH2_CLIENT_ID,
         'client_secret' => OAUTH2_CLIENT_SECRET,
-        'redirect_uri' => $_SERVER['SERVER_PROTOCOL']. '://' . $_SERVER['SERVER_NAME'] . 'swordhunter',
         'state' => $_SESSION['state'],
         'User-Agent' => APP_NAME,
         'code' => get('code')
