@@ -130,7 +130,7 @@ class gitHubController
         $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
         $headers[] = 'Accept: application/json, application/vnd.github.v3+json, application/vnd.github.machine-man-preview, text/html';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $return_headers = '';
+        $return_headers = [];
         curl_setopt($ch, CURLOPT_HEADERFUNCTION,
             function($curl, $header) use (&$return_headers)
             {
