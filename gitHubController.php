@@ -128,18 +128,18 @@ class gitHubController
         }
 
         $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
-        $headers[] = 'Accept: application/json';
+        $headers[] = 'Accept: application/json, application/vnd.github.v3+json, application/vnd.github.machine-man-preview, text/html';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
+        $return_headers = '';
         curl_setopt($ch, CURLOPT_HEADERFUNCTION,
-            function($curl, $header) use (&$headers)
+            function($curl, $header) use (&$return_headers)
             {
                 $len = strlen($header);
                 $header = explode(':', $header, 2);
                 if (count($header) < 2) // ignore invalid headers
                     return $len;
 
-                $headers[strtolower(trim($header[0]))][] = trim($header[1]);
+                $return_headers[strtolower(trim($header[0]))][] = trim($header[1]);
 
                 return $len;
             }
@@ -148,7 +148,7 @@ class gitHubController
 
         $this->response = curl_exec($ch);
         $this->debug[] = curl_getinfo($ch);
-        $this->debug[] = $headers;
+        $this->debug[] = $return_headers;
 
         return json_decode($this->response);
     }
