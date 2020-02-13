@@ -83,7 +83,7 @@ class gitHubController
                 $_SESSION['access_token'] = $token;
                 return 1;
             } else {
-                header('Location: ' . $this->base_url.'#redirected-form-not-an-empty-token');
+                header('Location: https://allie.co.za/swordhunter/#redirected-form-not-an-empty-token');
             }
         }
 
