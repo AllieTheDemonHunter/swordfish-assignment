@@ -10,7 +10,6 @@ define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
-define('BASE_URL', PROTOCOL . '://' . DOMAIN . '/receiving');
 
 define('ENDPOINT', API_URL . '/repos/'.GITHUB_ACCOUNT.'/'.REPO_NAME.'/issues');
 
