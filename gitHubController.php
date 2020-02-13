@@ -29,7 +29,6 @@ class gitHubController
      */
 
     public $response;
-    //private $access_token = '71677a6f8879860d33e7a60079839586afc4eedd';
 
     /**
      * gitHub constructor.
@@ -48,7 +47,7 @@ class gitHubController
             // Sending this to get logged in.
             $params = array(
                 'client_id' => OAUTH2_CLIENT_ID,
-                'login' => 'AllieTheDemonHunter', //personal convenience
+                'login' => GITHUB_ACCOUNT, //personal convenience
                 'state' => $_state,
                 'scope' => 'repo'
             );
@@ -116,6 +115,7 @@ class gitHubController
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         if ($post) {
+            curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
