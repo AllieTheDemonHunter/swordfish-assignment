@@ -84,7 +84,7 @@ class gitHubController
                 return 1;
             } else {
                 print_r($token);
-                header('Location: https://allie.co.za/swordhunter/#redirected-form-not-an-empty-token');
+//                header('Location: https://allie.co.za/swordhunter/#redirected-form-not-an-empty-token');
             }
         }
 
