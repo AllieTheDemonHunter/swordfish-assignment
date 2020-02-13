@@ -119,7 +119,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_VERBOSE, 1);
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
         $_token = $this->session('access_token');
