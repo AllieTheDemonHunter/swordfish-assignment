@@ -28,6 +28,10 @@ class gitHubController
      */
 
     public $response;
+    /**
+     * @var array
+     */
+    public $debug;
 
     /**
      * gitHub constructor.
@@ -131,7 +135,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
 
-        $_SESSION['debug'] = curl_getinfo($ch);
+        $this->debug[] = curl_getinfo($ch);
 
         return json_decode($this->response);
     }
@@ -162,7 +166,7 @@ trait gitHubTrait
         }
         print '<pre><<<';
         debug_print_backtrace();
-        die('Variable:'.print_r($any,1).'Session:'.print_r($_SESSION,1).'</pre>');
+        die('Variable:'.print_r($any,1).'Session:'.print_r($this,1).'</pre>');
     }
 
     /**
