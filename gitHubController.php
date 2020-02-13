@@ -87,7 +87,7 @@ class gitHubController
             $new = new stdClass();
             $new->title = 'test--o'.time();
             $create_issue = $this->apiRequest(ENDPOINT, $new);
-print_r($create_issue);
+
             $open = $this->apiRequest(ENDPOINT.'?state=open');
 
             $closed = $this->apiRequest(ENDPOINT.'?state=open');

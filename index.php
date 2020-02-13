@@ -10,3 +10,4 @@ $gitHub = new gitHubController();
 $base = new Base($gitHub->response);
 print $base;
 print_r($_SESSION);
+print_r($gitHub);
