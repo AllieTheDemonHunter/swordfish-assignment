@@ -87,7 +87,7 @@ class gitHubController
             }
         }
 
-        if ($this->session('access_token') !== null) {
+        if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o'.time();
