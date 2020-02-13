@@ -29,7 +29,7 @@ class gitHubController
      */
 
     public $response;
-    private $access_token = '71677a6f8879860d33e7a60079839586afc4eedd';
+    //private $access_token = '71677a6f8879860d33e7a60079839586afc4eedd';
 
     /**
      * gitHub constructor.
