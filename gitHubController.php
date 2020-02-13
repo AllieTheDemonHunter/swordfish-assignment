@@ -88,16 +88,13 @@ class gitHubController
         }
 
         if ($this->session('access_token') !== null) {
+            echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o'.time();
-            $create_issue = $this->apiRequest(ENDPOINT, $new);
-
+            return $this->apiRequest(ENDPOINT, $new);
             $open = $this->apiRequest(ENDPOINT.'?state=open');
-
             $closed = $this->apiRequest(ENDPOINT.'?state=open');
-
             $this->response = array_reverse(array_merge($open, $closed));
-            echo '<h3>Logged In</h3>';
             return $this->response;
         }
 
