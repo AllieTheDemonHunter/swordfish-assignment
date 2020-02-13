@@ -113,6 +113,8 @@ print_r($create_issue);
     {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, 1);
         if ($post) {
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
@@ -124,7 +126,8 @@ print_r($create_issue);
         }
 
         $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
-        $headers[] = 'Accept: application/json';
+        $headers[] = 'Accept: application/vnd.github.v3+json';
+        $headers[] = 'Content-Type: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
 
