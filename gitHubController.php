@@ -131,7 +131,6 @@ class gitHubController
 
         $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
         $headers[] = 'Accept: application/vnd.github.v3+json';
-        $headers[] = 'Content-Type: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $this->response = curl_exec($ch);
 
