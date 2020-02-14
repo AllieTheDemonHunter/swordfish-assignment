@@ -81,10 +81,6 @@ class gitHubController
 
             if(!empty($token)) {
                 $_SESSION['access_token'] = $token;
-                return 1;
-            } else {
-                print_r($token);
-//                header('Location: https://allie.co.za/swordhunter/#redirected-form-not-an-empty-token');
             }
         }
 
@@ -95,7 +91,7 @@ class gitHubController
             $open = $this->apiRequest(ENDPOINT.'?state=open');
             $closed = $this->apiRequest(ENDPOINT.'?state=open');
             $this->response = array_reverse(array_merge($open, $closed));
-            
+
             return $this->apiRequest(ENDPOINT, $new);
         }
 
