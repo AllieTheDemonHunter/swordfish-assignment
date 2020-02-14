@@ -10,7 +10,7 @@ define('REPO_NAME', 'GitIntegration');
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
-define('ENDPOINT', API_URL . '/'.GITHUB_ACCOUNT.'/repos');
+define('ENDPOINT', API_URL . '/users/'.GITHUB_ACCOUNT.'/repos');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
