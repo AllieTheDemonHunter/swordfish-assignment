@@ -1,14 +1,12 @@
 <?php
 define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
 define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
-define('REDIRECT_URI', 'http://allie.co.za/swordhunter');
+define('REDIRECT_URI', 'https://allie.co.za/swordhunter');
 define('OAUTH_APP_NAME', 'swordhunter');
 
 define('GITHUB_ACCOUNT', 'SwordfishCode');
 define('REPO_NAME', 'GitIntegration');
 
-
-define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
