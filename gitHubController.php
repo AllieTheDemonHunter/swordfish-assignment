@@ -52,7 +52,7 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'login' => GITHUB_ACCOUNT, //personal convenience
                 'state' => $_state,
-                'scope' => 'repo',
+                'scope' => 'user',
                 'redirect_uri' => REDIRECT_URI,
             );
 
