@@ -11,7 +11,7 @@ define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
-define('ENDPOINT', API_URL . '/repos/'.GITHUB_ACCOUNT.'/'.REPO_NAME.'/issues');
+define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME . '/issues');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -23,6 +23,7 @@ ini_set('display_errors', 1);
 class gitHubController
 {
     use gitHubTrait;
+
     /**
      * @var string
      */
@@ -79,7 +80,7 @@ class gitHubController
 
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
 
-            if(!empty($token)) {
+            if (!empty($token)) {
                 $_SESSION['access_token'] = $token;
             }
         }
@@ -87,14 +88,12 @@ class gitHubController
         if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
-            $new->title = 'test--o'.time();
-            $open = $this->apiRequest(ENDPOINT.'?state=open');
-            $closed = $this->apiRequest(ENDPOINT.'?state=open');
-            $this->response = array_reverse(array_merge($open, $closed));
-
-            return $this->apiRequest(ENDPOINT, $new);
+            $new->title = 'test--o' . time();
+            $this->apiRequest(ENDPOINT, $new);
         }
-
+        $open = $this->apiRequest(ENDPOINT . '?state=open');
+        $closed = $this->apiRequest(ENDPOINT . '?state=open');
+        $this->response = array_reverse(array_merge($open, $closed));
         //All clauses have exit().
         echo '<h3>Not logged in</h3>';
         echo '<p><a href="?login=1">Log In</a></p>';
@@ -119,7 +118,7 @@ class gitHubController
         }
 
         $_token = $this->session('access_token');
-        if (isset($_token) && is_string($this->session('access_token') )) {
+        if (isset($_token) && is_string($this->session('access_token'))) {
             $headers[] = 'Authorization: token ' . $this->session('access_token');
         }
 
@@ -128,8 +127,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $return_headers = [];
         curl_setopt($ch, CURLOPT_HEADERFUNCTION,
-            function($curl, $header) use (&$return_headers)
-            {
+            function ($curl, $header) use (&$return_headers) {
                 $len = strlen($header);
                 $header = explode(':', $header, 2);
                 if (count($header) < 2) // ignore invalid headers
@@ -169,13 +167,14 @@ trait gitHubTrait
         return false;
     }
 
-    function debug($any = ['nothing']) {
-        if(empty($any)) {
+    function debug($any = ['nothing'])
+    {
+        if (empty($any)) {
             $any = 'blank';
         }
         print '<pre><<<';
         debug_print_backtrace();
-        die('Variable:'.print_r($any,1).'Session:'.print_r($this,1).'</pre>');
+        die('Variable:' . print_r($any, 1) . 'Session:' . print_r($this, 1) . '</pre>');
     }
 
     /**
