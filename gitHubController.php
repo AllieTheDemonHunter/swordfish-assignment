@@ -1,16 +1,17 @@
 <?php
-define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-
+define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
+define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
+define('REDIRECT_URI', 'http://localhost:8080');
 define('OAUTH_APP_NAME', 'swordhunter');
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
-define('REPO_NAME', 'swordfish-assignment');
-define('DOMAIN', 'allie.co.za');
+
+define('GITHUB_ACCOUNT', 'SwordfishCode');
+define('REPO_NAME', 'GitIntegration');
+
+
 define('PROTOCOL', 'https'); //Enforcing this, sorry, not sorry.
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
-
 define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME . '/issues');
 
 error_reporting(E_ALL);
