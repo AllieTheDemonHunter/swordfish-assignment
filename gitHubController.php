@@ -92,11 +92,11 @@ class gitHubController
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o'.time();
-            return $this->apiRequest(ENDPOINT, $new);
             $open = $this->apiRequest(ENDPOINT.'?state=open');
             $closed = $this->apiRequest(ENDPOINT.'?state=open');
             $this->response = array_reverse(array_merge($open, $closed));
-            return $this->response;
+            
+            return $this->apiRequest(ENDPOINT, $new);
         }
 
         //All clauses have exit().

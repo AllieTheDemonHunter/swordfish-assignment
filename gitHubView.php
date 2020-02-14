@@ -2,7 +2,7 @@
 
 namespace GitAllie;
 
-use DateTimeZone;
+use \DateTime;
 
 class Collection extends \ArrayObject
 {
@@ -55,7 +55,7 @@ class gitHubView
     }
 }
 
-class When extends \DateTime
+class When extends DateTime
 {
     public function __construct($time = 'now', DateTimeZone $timezone = null)
     {
