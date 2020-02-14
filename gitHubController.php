@@ -55,7 +55,7 @@ class gitHubController
                 'login' => GITHUB_ACCOUNT, //personal convenience
                 'state' => $_state,
                 'scope' => 'repo',
-                'redirect_uri' => 'http://localhost:8080',
+                'redirect_uri' => REDIRECT_URI,
             );
 
             // Redirect the user to Github's authorization page
