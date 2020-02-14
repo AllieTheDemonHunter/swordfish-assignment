@@ -63,6 +63,7 @@ class gitHubController
 
         if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
+            print_r($_SESSION);
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
