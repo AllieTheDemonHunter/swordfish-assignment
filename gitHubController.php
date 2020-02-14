@@ -53,7 +53,8 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'login' => GITHUB_ACCOUNT, //personal convenience
                 'state' => $_state,
-                'scope' => 'repo'
+                'scope' => 'repo',
+                'redirect_uri' => 'http://localhost:8080',
             );
 
             // Redirect the user to Github's authorization page
@@ -61,12 +62,19 @@ class gitHubController
             exit();
         }
 
-        if ($this->get('code')) {
+        if (is_string($this->session('access_token'))) {
+            echo '<h3>Logged In</h3>';
+            $new = new stdClass();
+            $new->title = 'test--o' . time();
+            $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
+            $open = $this->apiRequest(ENDPOINT . '?state=open');
+            $closed = $this->apiRequest(ENDPOINT . '?state=open');
+            $this->response = array_reverse(array_merge($open, $closed));
+        } elseif ($this->get('code') && isset($_SESSION['state'])) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
             if (!$this->get('state') || $_SESSION['state'] != $this->get('state')) {
                 unset($_SESSION['state']);
-                //header('Location: ' . $this->base_url);
                 exit('Verify the state matches our stored state === FALSE');
             }
 
@@ -81,23 +89,15 @@ class gitHubController
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
 
             if (!empty($token)) {
-                $_SESSION['access_token'] = $token;
+                $_SESSION['access_token'] = $token->access_token;
             }
+            header('Location: http://localhost:8080');
         }
-
-        if (is_string($this->session('access_token'))) {
-            echo '<h3>Logged In</h3>';
-            $new = new stdClass();
-            $new->title = 'test--o' . time();
-            $this->apiRequest(ENDPOINT, $new);
+        else {
+            //All clauses have exit().
+            echo '<h3>Not logged in</h3>';
+            echo '<p><a href="?login=1">Log In</a></p>';
         }
-        $open = $this->apiRequest(ENDPOINT . '?state=open');
-        $closed = $this->apiRequest(ENDPOINT . '?state=open');
-        $this->response = array_reverse(array_merge($open, $closed));
-        //All clauses have exit().
-        echo '<h3>Not logged in</h3>';
-        echo '<p><a href="?login=1">Log In</a></p>';
-        $this->debug($_REQUEST);
     }
 
     /**
@@ -114,7 +114,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_VERBOSE, 1);
 
         if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ($post));
         }
 
         $_token = $this->session('access_token');
@@ -172,9 +172,9 @@ trait gitHubTrait
         if (empty($any)) {
             $any = 'blank';
         }
-        print '<pre><<<';
-        debug_print_backtrace();
-        die('Variable:' . print_r($any, 1) . 'Session:' . print_r($this, 1) . '</pre>');
+//        print '<pre><<<';
+//        debug_print_backtrace();
+//        print('Variable:' . print_r($any, 1) . 'Session:' . print_r($this, 1) . '</pre>');
     }
 
     /**
