@@ -1,9 +1,9 @@
 <?php
 namespace GitAllie;
+session_start();
 
 use gitHubController;
 
-session_start();
 ?>
 
 <!DOCTYPE html>
