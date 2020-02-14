@@ -3,7 +3,8 @@ namespace GitAllie;
 session_start();
 
 use gitHubController;
-
+include_once 'gitHubController.php';
+include_once 'gitHubView.php';
 ?>
 
 <!DOCTYPE html>
@@ -15,8 +16,6 @@ use gitHubController;
 </head>
 <body>
 <?php
-include_once 'gitHubController.php';
-include_once 'gitHubView.php';
 $gitHub = new gitHubController();
 $base = new Base($gitHub->response);
 print $base;

@@ -92,7 +92,7 @@ class gitHubController
             if (!empty($token)) {
                 $_SESSION['access_token'] = $token->access_token;
             }
-            header('Location: http://localhost:8080');
+            header('Location: '. REDIRECT_URI);
         }
         else {
             //All clauses have exit().
