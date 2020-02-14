@@ -1,7 +1,7 @@
 <?php
 define('OAUTH2_CLIENT_ID', '53af175ce5d46b80f33a');
 define('OAUTH2_CLIENT_SECRET', '9f906210cbce17ccc66cb97050e3c7d22bdfa4ac');
-define('REDIRECT_URI', 'http://localhost:8080');
+define('REDIRECT_URI', 'http://allie.co.za/swordhunter');
 define('OAUTH_APP_NAME', 'swordhunter');
 
 define('GITHUB_ACCOUNT', 'SwordfishCode');
