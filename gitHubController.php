@@ -139,7 +139,6 @@ class gitHubController
             }
         );
 
-
         $this->response = curl_exec($ch);
         $this->debug[] = curl_getinfo($ch);
         $this->debug[] = $return_headers;

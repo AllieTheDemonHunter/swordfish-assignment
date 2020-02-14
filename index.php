@@ -19,4 +19,4 @@ $base = new Base($gitHub->response);
 <?php
 
 print $base;
-print_r($gitHub->debug);
+//print_r($gitHub->debug);
