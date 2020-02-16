@@ -73,11 +73,11 @@ class gitHubController
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
-            $open = [];
-            $open = $this->apiRequest(ENDPOINT . '?state=open');
-            $closed = [];
-            $closed = $this->apiRequest(ENDPOINT . '?state=closed');
-            $this->response = array_reverse(array_merge($open, $closed));
+            $this->response = [];
+            $this->response[] += $this->apiRequest(ENDPOINT . '?state=open';
+            $this->response[] += $this->apiRequest(ENDPOINT . '?state=closed');
+            
+
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
@@ -99,9 +99,8 @@ class gitHubController
             if (!empty($token)) {
                 $_SESSION['access_token'] = $token->access_token;
             }
-            header('Location: '. REDIRECT_URI);
-        }
-        else {
+            header('Location: ' . REDIRECT_URI);
+        } else {
             //All clauses have exit().
             echo '<h3>Not logged in</h3>';
             echo '<p><a href="?login=1">Log In</a></p>';
