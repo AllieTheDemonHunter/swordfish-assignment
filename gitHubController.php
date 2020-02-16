@@ -71,8 +71,8 @@ class gitHubController
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o' . time();
-            $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
-            $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
+//            $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
+//            $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
 
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
