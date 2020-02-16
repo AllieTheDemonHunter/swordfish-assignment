@@ -1,20 +1,26 @@
 <?php
-define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-define('REDIRECT_URI', 'https://allie.co.za/swordhunter');
-define('OAUTH_APP_NAME', 'swordhunter');
-
-define('GITHUB_ACCOUNT', 'SwordfishCode');
-define('REPO_NAME', 'GitIntegration');
-
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
+
+//Environment
+define('REDIRECT_URI', 'https://allie.co.za/swordhunter');
+define('OAUTH_APP_NAME', 'swordhunter');
+
+//AllieTheDemonHunter
+define('GITHUB_ACCOUNT', 'AllieTheDemonHunter3');
+define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
+define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
+
+//Repo on github.com
+define('REPO_NAME', 'swordfish-assignment');
+
+
+// VERB or actions.
 define('ENDPOINT', API_URL . '/users');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 
 /**
  * Class gitHub
