@@ -17,7 +17,7 @@ define('REPO_NAME', 'swordfish-assignment');
 
 
 // VERB or actions.
-define('ENDPOINT', API_URL . '/users');
+define('ENDPOINT', API_URL . '/repo');
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
