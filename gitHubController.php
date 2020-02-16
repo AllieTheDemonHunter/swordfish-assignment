@@ -33,7 +33,7 @@ class gitHubController
      * @var string
      */
 
-    public $response;
+    public $response = [];
     /**
      * @var array
      */
@@ -73,7 +73,7 @@ class gitHubController
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
-            $this->response = [];
+            
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
