@@ -69,11 +69,10 @@ class gitHubController
 
         if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
-            
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
-
+            $this->response = [];
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
