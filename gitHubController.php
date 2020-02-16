@@ -73,7 +73,9 @@ class gitHubController
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
+            $open = [];
             $open = $this->apiRequest(ENDPOINT . '?state=open');
+            $closed = [];
             $closed = $this->apiRequest(ENDPOINT . '?state=closed');
             $this->response = array_reverse(array_merge($open, $closed));
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
