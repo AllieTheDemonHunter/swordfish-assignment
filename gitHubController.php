@@ -73,6 +73,7 @@ class gitHubController
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
             $this->response = [];
+            die(print_r($this->apiRequest(ENDPOINT . '?state=open'),1));
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
