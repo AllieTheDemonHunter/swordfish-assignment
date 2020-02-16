@@ -71,9 +71,6 @@ class gitHubController
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o' . time();
-            $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
-            $this->response = [];
-            die(print_r($this->apiRequest(ENDPOINT . '?state=open'),1));
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
@@ -160,12 +157,7 @@ trait gitHubTrait
 
     function debug($any = ['nothing'])
     {
-        if (empty($any)) {
-            $any = 'blank';
-        }
-//        print '<pre><<<';
-//        debug_print_backtrace();
-//        print('Variable:' . print_r($any, 1) . 'Session:' . print_r($this, 1) . '</pre>');
+
     }
 
     /**
