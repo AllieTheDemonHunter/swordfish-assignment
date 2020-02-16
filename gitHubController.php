@@ -69,11 +69,11 @@ class gitHubController
 
         if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
-            print_r($_SESSION);
+            
             $new = new stdClass();
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
-            
+
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
             $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
@@ -132,24 +132,9 @@ class gitHubController
         $headers[] = 'User-Agent: ' . OAUTH_APP_NAME;
         $headers[] = 'Accept: application/json, application/vnd.github.v3+json, application/vnd.github.machine-man-preview, text/html';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        $return_headers = [];
-        curl_setopt($ch, CURLOPT_HEADERFUNCTION,
-            function ($curl, $header) use (&$return_headers) {
-                $len = strlen($header);
-                $header = explode(':', $header, 2);
-                if (count($header) < 2) // ignore invalid headers
-                    return $len;
-
-                $return_headers[strtolower(trim($header[0]))][] = trim($header[1]);
-
-                return $len;
-            }
-        );
 
         $this->response = curl_exec($ch);
         $this->debug[] = curl_getinfo($ch);
-        $this->debug[] = $return_headers;
-
         return json_decode($this->response);
     }
 }
