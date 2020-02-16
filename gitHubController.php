@@ -74,8 +74,8 @@ class gitHubController
             $new->title = 'test--o' . time();
             $this->debug($this->apiRequest(ENDPOINT, json_encode($new)));
             $this->response = [];
-            $this->response[] = [$this->apiRequest(ENDPOINT . '?state=open')];
-            $this->response[] = [$this->apiRequest(ENDPOINT . '?state=closed')];
+            $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
+            $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
 
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
