@@ -4,7 +4,7 @@ define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
 //Environment
-define('REDIRECT_URI', 'https://allie.co.za/swordhunter');
+define('REDIRECT_URI', 'http://localhost:8080');
 define('OAUTH_APP_NAME', 'swordhunter');
 
 //AllieTheDemonHunter
@@ -17,7 +17,7 @@ define('REPO_NAME', 'swordfish-assignment');
 
 
 // VERB or actions.
-define('ENDPOINT', API_URL . '/repo');
+define('ENDPOINT', API_URL .'/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME );
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -58,7 +58,7 @@ class gitHubController
                 'client_id' => OAUTH2_CLIENT_ID,
                 'login' => GITHUB_ACCOUNT, //personal convenience
                 'state' => $_state,
-                'scope' => 'user',
+                'scope' => 'repo',
                 'redirect_uri' => REDIRECT_URI,
             );
 
@@ -71,7 +71,8 @@ class gitHubController
             echo '<h3>Logged In</h3>';
             $new = new stdClass();
             $new->title = 'test--o' . time();
-//            $this->response[] = $this->apiRequest(ENDPOINT . '?state=open');
+            $this->response = $this->apiRequest(ENDPOINT . '/issues', ($new));
+            $this->response = $this->apiRequest(ENDPOINT . '/issues?state=open');
 //            $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
 
 
@@ -118,7 +119,7 @@ class gitHubController
         curl_setopt($ch, CURLOPT_VERBOSE, 1);
 
         if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, ($post));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
         }
 
         $_token = $this->session('access_token');
