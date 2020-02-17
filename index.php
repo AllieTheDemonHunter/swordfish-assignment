@@ -2,7 +2,6 @@
 namespace GitAllie;
 session_start();
 
-use gitHubController;
 include_once 'gitHubController.php';
 include_once 'gitHubView.php';
 $gitHub = new gitHubController();

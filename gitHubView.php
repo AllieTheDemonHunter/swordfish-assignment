@@ -70,7 +70,7 @@ class When extends DateTime
 
 class Base extends gitHubView
 {
-    use \gitHubTrait;
+    use gitHubTrait;
     public $issues;
 
     public function __construct($incomingData)

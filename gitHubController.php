@@ -1,20 +1,35 @@
 <?php
+
+namespace GitAllie;
+
+use stdClass;
+
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 
-//Environment
-define('REDIRECT_URI', 'http://localhost:8080');
-define('OAUTH_APP_NAME', 'swordhunter');
-
-//AllieTheDemonHunter
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
-define('OAUTH2_CLIENT_ID', '2434d612549dff0bb4e0');
-define('OAUTH2_CLIENT_SECRET', 'b815281ba8cd9cc295b4b6bc1ed375da8d50ad61');
-
 //Repo on github.com
 define('REPO_NAME', 'swordfish-assignment');
+define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
+define('HOME', trim(`echo ~`)); // *nix
 
+// Get secrets
+if($_SERVER['HTTP_HOST'] === 'localhost:8080') {
+    $file_name = HOME . '/safe-fish/.env.local.json'; //At home
+} else {
+    $file_name = HOME . '/safe-fish/.env.allie.co.za.json';
+}
+
+if(file_exists($file_name)) {
+    $secrets = file_get_contents($file_name);
+
+    if(is_string($secrets) && strlen($secrets) > 0) {
+        $secrets_object = json_decode($secrets);
+        foreach($secrets_object as $constant_name => $value) {
+            define($constant_name, $value);
+        }
+    }
+}
 
 // VERB or actions.
 define('ENDPOINT', API_URL .'/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME );
@@ -154,11 +169,6 @@ trait gitHubTrait
         }
 
         return false;
-    }
-
-    function debug($any = ['nothing'])
-    {
-
     }
 
     /**
