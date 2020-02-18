@@ -131,3 +131,10 @@ body {
     }
   }
 }
+
+form {
+  display: flex;
+  input {
+    flex: 0 0 100%;
+  }
+}

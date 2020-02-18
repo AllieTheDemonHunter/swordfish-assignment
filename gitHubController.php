@@ -189,21 +189,40 @@ trait gitHubTrait
 
 class gitHubCommander extends gitHubController
 {
+    public $labels;
+    /**
+     * @var mixed
+     */
+    public $issues;
+
     public function __construct()
     {
         parent::__construct();
+        $this->issues();
+        $this->labels();
     }
 
     public function issues($which = 'open')
     {
-        $this->response = $this->apiRequest(ENDPOINT . '/issues?state=' . $which);
+        return $this->issues = $this->apiRequest(ENDPOINT . '/issues?state=' . $which);
+    }
+
+    public function labels()
+    {
+        return $this->labels = $this->apiRequest(ENDPOINT . '/labels');
     }
 
     public function set_issue()
     {
+        if (!$_POST) {
+            exit;
+        }
+
         //Create a new issue
         $new = new stdClass();
-        $new->title = 'test--o' . time();
+        $new->title = $_POST;
+        $new->description = $_POST;
+        $new->labels = $_POST;
         $this->apiRequest(ENDPOINT . '/issues', json_encode($new));
     }
 }

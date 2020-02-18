@@ -73,11 +73,15 @@ class Base extends gitHubView
     use gitHubTrait;
     public $issues;
 
-    public function __construct($incomingData)
+    public function __construct(gitHubCommander $incomingData)
     {
-        if(!empty($incomingData) && $incomingData) {
-            foreach ($incomingData as $key => $issue) {
+        if(!empty($incomingData)) {
+            foreach ($incomingData->issues as $key => $issue) {
                 $this->issues[] = new Issue($issue);
+            }
+
+            foreach ($incomingData->labels as $key => $label) {
+                $this->issues[] = new Label($label);
             }
         } else {
             print 'No incomingData';
@@ -157,6 +161,7 @@ class Label extends gitHubView
 {
     public $description;
     public $name;
+    public $type;
 
     public function __construct($labelData)
     {
@@ -165,6 +170,7 @@ class Label extends gitHubView
             $this->description = '-';
         } else {
             $this->name = substr($labelData->name, 3);
+            $this->type = substr($labelData->name, 0, 1);
             $this->description = $labelData->description;
         }
     }
