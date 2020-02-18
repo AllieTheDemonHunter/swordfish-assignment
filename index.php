@@ -4,8 +4,10 @@ session_start();
 
 include_once 'gitHubController.php';
 include_once 'gitHubView.php';
-$gitHub = new gitHubController();
+$gitHub = new gitHubCommander();
+$gitHub->issues();
 $base = new Base($gitHub->response);
+$gitHub->set_issue();
 
 ?><!DOCTYPE html>
 <html lang="en">

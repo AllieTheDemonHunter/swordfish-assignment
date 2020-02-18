@@ -14,25 +14,25 @@ define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('HOME', trim(`echo ~`)); // *nix
 
 // Get secrets
-if($_SERVER['HTTP_HOST'] === 'localhost:8080') {
+if ($_SERVER['HTTP_HOST'] === 'localhost:8080') {
     $file_name = HOME . '/safe-fish/.env.local.json'; //At home
 } else {
     $file_name = HOME . '/safe-fish/.env.allie.co.za.json';
 }
 
-if(file_exists($file_name)) {
+if (file_exists($file_name)) {
     $secrets = file_get_contents($file_name);
 
-    if(is_string($secrets) && strlen($secrets) > 0) {
+    if (is_string($secrets) && strlen($secrets) > 0) {
         $secrets_object = json_decode($secrets);
-        foreach($secrets_object as $constant_name => $value) {
+        foreach ($secrets_object as $constant_name => $value) {
             define($constant_name, $value);
         }
     }
 }
 
 // VERB or actions.
-define('ENDPOINT', API_URL .'/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME );
+define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -84,13 +84,6 @@ class gitHubController
 
         if (is_string($this->session('access_token'))) {
             echo '<h3>Logged In</h3>';
-            $new = new stdClass();
-            $new->title = 'test--o' . time();
-            $this->response = $this->apiRequest(ENDPOINT . '/issues', ($new));
-            $this->response = $this->apiRequest(ENDPOINT . '/issues?state=open');
-//            $this->response[] = $this->apiRequest(ENDPOINT . '?state=closed');
-
-
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
@@ -112,11 +105,12 @@ class gitHubController
             if (!empty($token)) {
                 $_SESSION['access_token'] = $token->access_token;
             }
-            header('Location: ' . REDIRECT_URI);
+            //header('Location: ' . REDIRECT_URI);
         } else {
             //All clauses have exit().
             echo '<h3>Not logged in</h3>';
             echo '<p><a href="?login=1">Log In</a></p>';
+            exit();
         }
     }
 
@@ -133,10 +127,6 @@ class gitHubController
         curl_setopt($ch, CURLINFO_HEADER_OUT, 1);
         curl_setopt($ch, CURLOPT_VERBOSE, 1);
 
-        if ($post) {
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
-        }
-
         $_token = $this->session('access_token');
         if (isset($_token) && is_string($this->session('access_token'))) {
             $headers[] = 'Authorization: token ' . $this->session('access_token');
@@ -146,7 +136,13 @@ class gitHubController
         $headers[] = 'Accept: application/json, application/vnd.github.v3+json, application/vnd.github.machine-man-preview, text/html';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-        $this->response = curl_exec($ch);
+        if ($post) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, ($post));
+            $this->response = $this->gitHubResponseHandler(curl_exec($ch));
+        } else {
+            $this->response = $this->gitHubResponseHandler(curl_exec($ch));
+        }
+
         $this->debug[] = curl_getinfo($ch);
         return json_decode($this->response);
     }
@@ -171,6 +167,11 @@ trait gitHubTrait
         return false;
     }
 
+    function gitHubResponseHandler($dataFromGitHub)
+    {
+        return $this->response = $dataFromGitHub;
+    }
+
     /**
      * @param $key
      * @param null $default
@@ -183,5 +184,26 @@ trait gitHubTrait
         }
 
         return false;
+    }
+}
+
+class gitHubCommander extends gitHubController
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function issues($which = 'open')
+    {
+        $this->response = $this->apiRequest(ENDPOINT . '/issues?state=' . $which);
+    }
+
+    public function set_issue()
+    {
+        //Create a new issue
+        $new = new stdClass();
+        $new->title = 'test--o' . time();
+        $this->apiRequest(ENDPOINT . '/issues', json_encode($new));
     }
 }
