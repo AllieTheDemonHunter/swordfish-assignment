@@ -241,6 +241,7 @@ class gitHubCommander extends gitHubController
         $new->title = $_POST['issue-name'];
         $new->description = $_POST["issue-description"];
         $new->labels = $_POST["labels"];
+        $new->assignee = $_POST["assignees"][0];
         $this->apiRequest(ENDPOINT . '/issues', json_encode($new));
     }
 }
