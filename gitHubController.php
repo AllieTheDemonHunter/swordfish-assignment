@@ -12,6 +12,8 @@ define('API_URL', 'https://api.github.com');
 define('REPO_NAME', 'swordfish-assignment');
 define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('HOME', trim(`echo ~`)); // *nix
+// VERB or actions.
+define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
 
 // Get secrets
 if ($_SERVER['HTTP_HOST'] === 'localhost:8080') {
@@ -30,9 +32,6 @@ if (file_exists($file_name)) {
         }
     }
 }
-
-// VERB or actions.
-define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -144,7 +143,7 @@ class gitHubController
         }
 
         $this->debug[] = curl_getinfo($ch);
-        return json_decode($this->response);
+        return $this->response;
     }
 }
 
@@ -169,7 +168,14 @@ trait gitHubTrait
 
     function gitHubResponseHandler($dataFromGitHub)
     {
-        return $this->response = $dataFromGitHub;
+        $decoded = json_decode($dataFromGitHub);
+        foreach ($decoded as $key => $data) {
+            if (isset($data->id)) {
+                $key = $data->id;
+            }
+            $formatted[$key] = $data;
+        }
+        return $this->response = $formatted;
     }
 
     /**
@@ -195,16 +201,27 @@ class gitHubCommander extends gitHubController
      */
     public $issues;
 
+    /**
+     * @var mixed|string
+     */
+    public $collaborators;
+
     public function __construct()
     {
         parent::__construct();
         $this->issues();
         $this->labels();
+        $this->collaborators();
     }
 
     public function issues($which = 'open')
     {
         return $this->issues = $this->apiRequest(ENDPOINT . '/issues?state=' . $which);
+    }
+
+    public function collaborators()
+    {
+        return $this->collaborators = $this->apiRequest(ENDPOINT . '/collaborators');
     }
 
     public function labels()
@@ -215,14 +232,15 @@ class gitHubCommander extends gitHubController
     public function set_issue()
     {
         if (!$_POST) {
-            exit;
+            print 'nope';
+            return;
         }
 
         //Create a new issue
         $new = new stdClass();
-        $new->title = $_POST;
-        $new->description = $_POST;
-        $new->labels = $_POST;
+        $new->title = $_POST['issue-name'];
+        $new->description = $_POST["issue-description"];
+        $new->labels = $_POST["labels"];
         $this->apiRequest(ENDPOINT . '/issues', json_encode($new));
     }
 }

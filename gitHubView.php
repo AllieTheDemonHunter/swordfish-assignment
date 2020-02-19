@@ -162,6 +162,8 @@ class Label extends gitHubView
     public $description;
     public $name;
     public $type;
+    public $id;
+    public $name_raw;
 
     public function __construct($labelData)
     {
@@ -169,9 +171,11 @@ class Label extends gitHubView
             $this->name = '-';
             $this->description = '-';
         } else {
+            $this->name_raw = $labelData->name;
             $this->name = substr($labelData->name, 3);
             $this->type = substr($labelData->name, 0, 1);
             $this->description = $labelData->description;
+            $this->id = $labelData->id;
         }
     }
 }

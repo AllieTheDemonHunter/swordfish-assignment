@@ -22,3 +22,5 @@ class ajax extends gitHubCommander {
         }
     }
 }
+
+new ajax();
