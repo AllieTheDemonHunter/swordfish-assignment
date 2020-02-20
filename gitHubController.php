@@ -82,7 +82,7 @@ class gitHubController
         }
 
         if (is_string($this->session('access_token'))) {
-            // silencio
+            // ok.
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
@@ -209,7 +209,6 @@ class gitHubCommander extends gitHubController
     {
         parent::__construct();
         $this->issues();
-        $this->issues = array_merge($this->issues, $this->issues('closed'));
         $this->labels();
         $this->collaborators();
     }
