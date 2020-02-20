@@ -82,7 +82,7 @@ class gitHubController
         }
 
         if (is_string($this->session('access_token'))) {
-            echo '<h3>Logged In</h3>';
+            // silencio
         } elseif ($this->get('code') && isset($_SESSION['state'])) {
             // When Github redirects the user back here.
             // Verify the state matches our stored state
