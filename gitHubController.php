@@ -168,7 +168,7 @@ trait gitHubTrait
             if (isset($data->id)) {
                 $key = $data->id;
             }
-            $formatted[$key] = strip_tags($data);
+            $formatted[$key] = $data;
         }
         return $this->response = $formatted;
     }
