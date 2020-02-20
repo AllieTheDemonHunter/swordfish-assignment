@@ -165,6 +165,7 @@ trait gitHubTrait
     {
         $decoded = json_decode($dataFromGitHub);
         foreach ($decoded as $key => $data) {
+            $data = strip_tags($data);
             if (isset($data->id)) {
                 $key = $data->id;
             }
