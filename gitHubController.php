@@ -9,7 +9,6 @@ define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
 define('HOME', trim(`echo ~`)); // *nix
 // VERB or actions.
-define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
 
 // Get secrets
 if ($_SERVER['HTTP_HOST'] === 'localhost:8080') {
@@ -28,6 +27,7 @@ if (file_exists($file_name)) {
         }
     }
 }
+define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
