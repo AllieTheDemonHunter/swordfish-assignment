@@ -3,9 +3,7 @@
 
 ## Important
 Hi jacovdloo, tjaart9 and JulienDuhain, please read :)
-### The _account_ that I was tasked to use as proof, I could connect to.
-#### BUT: No repo was setup, also no Labels were defined? 
-#### SO: I used my own repo and set it up as best as your description. 
+
 
 ## Preface
 Greetings; thank you for your time to asses this assignment.
