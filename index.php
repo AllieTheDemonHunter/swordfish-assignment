@@ -23,8 +23,8 @@ $base = new Base($gitHub);
     <script>
         jQuery(document).ready(function ($) {
             $('form').on('submit', function (e, v) {
-                e.preventDefault();
-                $.post('ajax.php', $(this).serialize());
+                //e.preventDefault();
+                //$.post('ajax.php', $(this).serialize());
             })
         });
     </script>
@@ -33,14 +33,13 @@ $base = new Base($gitHub);
 <?php
 print $base;
 ?>
-<form method="post">
+<form method="post" action="ajax.php">
     <label>
         <span>Title</span>
         <input type="text" name="issue-name" required placeholder="Name">
     </label>
     <label>
         <span>Labels</span>
-        <select name="labels[]" multiple>
             <?php
             foreach ($gitHub->labels as $value) {
                 $label_convention = new Label($value);
@@ -49,21 +48,20 @@ print $base;
             }
 
             foreach ($view_labels as $key => $view_label_type) {
-                //         print "<option value='1' name='' style='color:\#{$value->color}'>{$value->name} ({$type})</option>";
-                print "<optgroup label='$key'>";
+                print '<select name="labels[]">';
                 foreach ($view_label_type as $label) {
                     print "<option value='{$label->name_raw}'>{$label->name}</option>";
                 }
-                print "</optgroup>";
+                print "</select>";
             }
             ?>
-        </select>
+
     </label>
 
-    <!--new collaborators-->
+    <!--new-collaborators-->
     <label>
         <span>Assignees</span>
-        <select name="assignees[]" multiple>
+        <select name="assignee">
             <?php
             foreach ($gitHub->collaborators as $value) {
                 $user_convention = new User($value);
@@ -77,8 +75,7 @@ print $base;
             ?>
         </select>
     </label>
-    <!--new-end-->
-
+    <!--new-collaborators-end-->
 
     <label>
         <span>Description</span>

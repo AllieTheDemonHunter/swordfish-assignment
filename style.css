@@ -1,9 +1,7 @@
 ul {
   list-style: none;
-  padding: 0; }
-
-.id, .url, .friendly-name {
-  display: none; }
+  padding: 0;
+  margin: 0; }
 
 li {
   padding: 0; }
@@ -28,8 +26,7 @@ body {
   display: block;
   margin: 0; }
   .labels .label .description {
-    color: green;
-    display: none; }
+    color: green; }
 
 .labels > .collection {
   display: inline-grid;
@@ -47,17 +44,6 @@ body {
   .labels > .collection ul.label {
     width: 100px;
     color: red; }
-    .labels > .collection ul.label .friendly-name {
-      display: none; }
-
-.labels > .friendly-name {
-  display: none !important; }
-
-.description > .label {
-  display: none; }
-
-.assignees, .id {
-  display: none; }
 
 .issue {
   display: flex;
@@ -77,5 +63,50 @@ body {
       flex: 0 0 50px; }
     .issue > li.assignee {
       flex: 0 0 180px; }
-    .issue > li.assignees, .issue > li.user, .issue > li.created_at, .issue > li.updated_at, .issue > li.closed_at {
-      display: none; }
+
+form {
+  display: flex; }
+  form input {
+    flex: 0 0 100%; }
+
+table.base, form {
+  max-width: calc(100vw - 30px);
+  margin: 1rem auto 5rem;
+  border: 1px solid silver; }
+
+td {
+  overflow: hidden;
+  position: relative;
+  vertical-align: top; }
+
+tbody > tr:first-child td::before {
+  content: attr(class);
+  text-transform: capitalize;
+  background-color: lightskyblue;
+  width: 100%;
+  display: inline-block; }
+
+tbody > tr:first-child td.labels::before {
+  content: 'Client Priority Type';
+  text-align: justify; }
+
+form {
+  display: flex;
+  width: 500px;
+  flex-flow: row wrap; }
+
+label {
+  flex: 1 1 100%;
+  padding: 1rem; }
+  label span {
+    width: 100px;
+    font-weight: bold;
+    display: inline-block; }
+
+ul.labels-children {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between; }
+
+td.user, td.id {
+  display: none; }

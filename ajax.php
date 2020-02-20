@@ -17,6 +17,7 @@ class ajax extends gitHubCommander {
             if (isset($_POST['action']) && !empty($_POST['action'])) {
                 if($_POST['action'] === 'create-issue') {
                     $this->set_issue();
+                    header('Location: ' . REDIRECT_URI);
                 }
             }
         }

@@ -239,9 +239,9 @@ class gitHubCommander extends gitHubController
         //Create a new issue
         $new = new stdClass();
         $new->title = $_POST['issue-name'];
-        $new->description = $_POST["issue-description"];
+        $new->body = $_POST["issue-description"];
         $new->labels = $_POST["labels"];
-        $new->assignee = $_POST["assignees"][0];
+        $new->assignee = $_POST["assignee"]; //Apparently GitHub only allows one assignee per initial issue creation
         $this->apiRequest(ENDPOINT . '/issues', json_encode($new));
     }
 }

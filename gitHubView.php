@@ -30,9 +30,84 @@ class Collection extends \ArrayObject
     }
 }
 
+class CollectionTable extends \ArrayObject
+{
+    public $header_row;
+
+    public function __construct($input = array(), $flags = 0, $iterator_class = "ArrayIterator")
+    {
+        parent::__construct($input, $flags, $iterator_class);
+    }
+
+    public function make_header()
+    {
+        $this->header_row = '<th>';
+        $definition = new Issue();
+        foreach ($definition as $key => $value) {
+            $this->header_row .= '<td class="' . strtolower($key) . '">' . $key . '</td>';
+        }
+        $this->header_row .= '</th>';
+    }
+
+    public function __toString()
+    {
+        $caller = explode('\\', get_called_class());
+        $invokedBy = implode(' ', $caller);
+        $output = $this->header_row;
+        $output .= '<tr class="' . strtolower($invokedBy) . '">';
+
+        //This should be various columns for each line.
+        // $this is currently a GitAllie\CollectionTable
+        foreach ($this as $key => $value) {
+            // $value here is something like number, Label, User (assignee) or Title..
+
+            if (is_int($value)) {
+                $output .= '<td class="' . $key . '">' . $value . '</td>';
+            }
+
+            if (is_string($value)) {
+                $output .= '<td class="' . $key . '">' . $value . '</td>';
+            }
+
+            if (is_array($value)) {
+                $content = '<ul class="' . $key . '-children">';
+                foreach ($value as $content_key => $content_node) {
+                    $content .= '<li>';
+                    if ($content_node instanceof User) {
+                        $content .= $content_node->login;
+                    } else {
+                        $content .= $content_node->name;
+                    }
+
+                    $content .= '</li>';
+                }
+                $content .= '</ul>';
+                $output .= '<td class="' . $key . '">' . $content . '</td>';
+            }
+
+            if ($value instanceof Issue) {
+                $output .= '<td class="issue">' . print_r($value, 1) . '</td>';
+            }
+
+            if ($value instanceof User) {
+                $output .= '<td class="user">' . $value->login . '</td>';
+            }
+        }
+
+        $output .= '</tr>';
+        return $output;
+    }
+}
+
 class gitHubView
 {
     public function __toString()
+    {
+//        return $this->to_list();
+        return $this->to_table();
+    }
+
+    public function to_list()
     {
         $caller = explode('\\', get_called_class());
         $invoked = array_pop($caller);
@@ -50,6 +125,22 @@ class gitHubView
             }
         }
         $out .= '</ul>';
+
+        return $out;
+    }
+
+    public function to_table()
+    {
+        $caller = explode('\\', get_called_class());
+        $invoked = array_pop($caller);
+        $out = '<table class="' . strtolower($invoked) . '">';
+        if (isset($this->issues)) {
+            foreach ($this->issues as $key => $issue) {
+                // The order here is important
+                $out .= new CollectionTable($issue);
+            }
+        }
+        $out .= '</table>';
 
         return $out;
     }
@@ -71,17 +162,22 @@ class When extends DateTime
 class Base extends gitHubView
 {
     use gitHubTrait;
+
     public $issues;
+    /**
+     * @var array
+     */
+    public $labels;
 
     public function __construct(gitHubCommander $incomingData)
     {
-        if(!empty($incomingData)) {
+        if (!empty($incomingData)) {
             foreach ($incomingData->issues as $key => $issue) {
                 $this->issues[] = new Issue($issue);
             }
 
             foreach ($incomingData->labels as $key => $label) {
-                $this->issues[] = new Label($label);
+                $this->labels[] = new Label($label);
             }
         } else {
             print 'No incomingData';
@@ -106,8 +202,12 @@ class Issue extends gitHubView
     public $updated_at;
     public $closed_at;
 
-    public function __construct($issueData)
+    public function __construct($issueData = false)
     {
+        if (!$issueData) {
+            //Get return this definition.
+            return get_class_vars(self::class);
+        }
         $this->user = new User($issueData->user);
 
         if (!empty($issueData->labels)) {
