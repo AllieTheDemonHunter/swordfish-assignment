@@ -7,10 +7,6 @@ use stdClass;
 define('AUTH_URL', 'https://github.com/login/oauth/authorize');
 define('TOKEN_URL', 'https://github.com/login/oauth/access_token');
 define('API_URL', 'https://api.github.com');
-
-//Repo on github.com
-define('REPO_NAME', 'swordfish-assignment');
-define('GITHUB_ACCOUNT', 'AllieTheDemonHunter');
 define('HOME', trim(`echo ~`)); // *nix
 // VERB or actions.
 define('ENDPOINT', API_URL . '/repos/' . GITHUB_ACCOUNT . '/' . REPO_NAME);
