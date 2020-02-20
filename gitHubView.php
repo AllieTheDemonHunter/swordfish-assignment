@@ -62,11 +62,11 @@ class CollectionTable extends \ArrayObject
             // $value here is something like number, Label, User (assignee) or Title..
 
             if (is_int($value)) {
-                $output .= '<td class="' . $key . '">' . $value . '</td>';
+                $output .= '<td class="' . $key . '">' . strip_tags($value) . '</td>';
             }
 
             if (is_string($value)) {
-                $output .= '<td class="' . $key . '">' . $value . '</td>';
+                $output .= '<td class="' . $key . '">' . strip_tags($value) . '</td>';
             }
 
             if (is_array($value)) {
