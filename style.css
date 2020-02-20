@@ -87,8 +87,9 @@ tbody > tr:first-child td::before {
   display: inline-block; }
 
 tbody > tr:first-child td.labels::before {
-  content: 'Client Priority Type';
-  text-align: justify; }
+  content: 'Client | Priority | Type';
+  text-align: justify;
+  text-align-last: justify; }
 
 form {
   display: flex;
@@ -104,9 +105,13 @@ label {
     display: inline-block; }
 
 ul.labels-children {
+  flex-flow: row nowrap;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between; }
+  justify-content: space-between;
+  width: 300px; }
+  ul.labels-children li {
+    flex: 1 0 90px; }
 
 td.user, td.id {
   display: none; }

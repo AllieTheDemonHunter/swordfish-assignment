@@ -165,8 +165,9 @@ tbody > {
       display: inline-block;
     }
     td.labels::before {
-      content: 'Client Priority Type';
+      content: 'Client | Priority | Type';
       text-align: justify;
+      text-align-last: justify;
     }
   }
 }
@@ -189,9 +190,15 @@ label {
 }
 
 ul.labels-children {
+  flex-flow: row nowrap;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  width: 300px;
+
+  li {
+    flex: 1 0 90px;
+  }
 }
 
 td.user, td.id {
