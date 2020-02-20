@@ -209,6 +209,7 @@ class gitHubCommander extends gitHubController
     {
         parent::__construct();
         $this->issues();
+        $this->issues = array_merge($this->issues, $this->issues('closed'));
         $this->labels();
         $this->collaborators();
     }
