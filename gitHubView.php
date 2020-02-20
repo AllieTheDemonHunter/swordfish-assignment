@@ -227,7 +227,7 @@ class Issue extends gitHubView
         $this->id = $issueData->id;
         $this->state = $issueData->state;
         $this->assignee = new User($issueData->assignee);
-        $this->body = $issueData->body;
+        $this->body = strip_tags($issueData->body);
 
         // These might throw exceptions.
         try {
