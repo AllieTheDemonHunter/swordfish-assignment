@@ -102,9 +102,8 @@ class gitHubController
             $token = $this->apiRequest(TOKEN_URL, $post_for_auth);
 
             if (!empty($token)) {
-                $_SESSION['access_token'] = $token->access_token;
+                $_SESSION['access_token'] = $token['access_token'];
             }
-            //header('Location: ' . REDIRECT_URI);
         } else {
             //All clauses have exit().
             echo '<h3>Not logged in</h3>';
